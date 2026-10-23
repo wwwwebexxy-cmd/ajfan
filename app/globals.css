@@ -41,7 +41,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .nav .container > a:first-child .brand { margin-right: 0; }
 .brand-logo { display: block; width: auto; max-width: 108px; height: 58px; border-radius: 0; object-fit: contain; transition: transform .3s; }
 .brand:hover .brand-logo { transform: scale(1.03); }
-.brand-dark { width: fit-content; padding: 10px 14px; border: 1px solid #09977f99; border-radius: 14px; background: transparent; box-shadow: 0 10px 26px #00000024; }
+.brand-dark { width: fit-content; padding: 10px 14px; border-radius: 14px; background: transparent; }
 .brand-dark .brand-logo { max-width: 140px; height: 84px; }
 .nav-links { display: flex; align-items: center; gap: 26px; color: #1e255b99; font-weight: 500; }
 .nav-links a { padding: 10px 0; white-space: nowrap; }
@@ -111,7 +111,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .cta .btn.green { background: var(--green); }
 .actions { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
 
-.cta { padding: 95px 0; color: white; text-align: center; background: linear-gradient(rgba(30,37,91,.9), rgba(30,37,91,.9)), url("/images/ajfan-business-setup.png") center/cover; }
+.cta { padding: 95px 0; color: white; text-align: center; background: linear-gradient(rgba(30,37,91,.9), rgba(30,37,91,.9)), url("/images/ajfan-business-setup.webp") center/cover; }
 .cta h2 { max-width: 780px; margin: 18px auto; font-size: 48px; line-height: 1.1; }
 .cta p { color: #ffffffd9; font-size: 18px; }
 
@@ -179,16 +179,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .home-about-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 64px; }
 .home-about-image-wrap { position: relative; padding: 16px 16px 0 0; }
 .home-about-frame { position: absolute; top: 0; left: 0; width: calc(100% - 16px); height: calc(100% - 16px); border: 2px solid #09977f66; border-radius: 16px; }
-.home-about-image { position: relative; min-height: 420px; overflow: hidden; border-radius: 16px; background: url("/images/ajfan-business-setup.png") center/cover; box-shadow: 0 30px 70px #1e255b2e; }
+.home-about-image { position: relative; min-height: 420px; overflow: hidden; border-radius: 16px; background: url("/images/ajfan-business-setup.webp") center/cover; box-shadow: 0 30px 70px #1e255b2e; }
 .home-about-image::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: #1e255b26; pointer-events: none; }
 .home-about-badge { position: absolute; right: -12px; bottom: -22px; display: flex; flex-direction: column; padding: 16px 24px; border-radius: 12px; color: white; background: var(--navy); box-shadow: 0 16px 28px #1e255b40; }
 .home-about-badge strong { color: white; font-family: "Montserrat", sans-serif; font-size: 24px; }
 .home-about-badge span { margin-top: 4px; color: #ffffff99; font-size: 12px; }
 .home-about .btn { margin-top: 18px; }
 .about-pillars { display: grid; gap: 14px; margin: 28px 0 0; padding: 0; list-style: none; }
-.about-pillars li { display: flex; align-items: center; gap: 10px; color: #1e255bb3; font-size: 15px; }
+.about-pillars li { display: flex; align-items: flex-start; gap: 10px; color: #1e255bb3; font-size: 15px; }
 .about-tagline { margin: 24px 0 0; color: var(--navy); font-family: "Montserrat", "Poppins", sans-serif; font-size: 16px; font-weight: 700; line-height: 1.5; }
-.pillar-check { width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; color: var(--gold-2); background: #09977f26; font-size: 12px; font-weight: 800; }
+.pillar-check { width: 20px; height: 20px; display: grid; flex: 0 0 20px; place-items: center; margin-top: 1px; border-radius: 50%; color: var(--gold-2); background: #09977f26; font-size: 12px; font-weight: 800; }
 .corporate-banner { position: relative; overflow: hidden; padding: 88px 0; color: white; background: var(--navy); }
 .corporate-banner::after { content: ""; position: absolute; inset: 0; opacity: .18; pointer-events: none; background-image: radial-gradient(circle at 15% 85%, var(--gold), transparent 24%), radial-gradient(circle at 90% 10%, #ffffff, transparent 16%); }
 .corporate-content { position: relative; z-index: 1; max-width: 850px; }
@@ -518,7 +518,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .cta { position: relative; overflow: hidden; padding: 0; background: var(--navy); }
 .cta-backdrop { position: absolute; inset: 0; }
-.cta-backdrop { background: url("/images/ajfan-business-setup.png") center/cover; }
+.cta-backdrop { background: url("/images/ajfan-business-setup.webp") center/cover; }
 .cta-backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #1e255ba6, #1e255b73); pointer-events: none; }
 .cta-content { position: relative; z-index: 1; padding-top: 80px; padding-bottom: 112px; text-align: center; }
 .cta h2 { max-width: 768px; margin: 16px auto 0; font-size: 48px; }

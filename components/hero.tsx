@@ -10,7 +10,7 @@ type HeroProps = {
 };
 
 export function Hero({ label, title, description, home = false, image }: HeroProps) {
-  const backgroundImage = image ?? "/images/ajfan-hero-services.png";
+  const backgroundImage = image ?? "/images/ajfan-hero-services.webp";
 
   if (home) {
     return (

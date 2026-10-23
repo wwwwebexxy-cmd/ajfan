@@ -26,11 +26,12 @@ export const metadata: Metadata = {
   publisher: siteName,
   applicationName: siteAlternateName,
   category: "business services",
+  formatDetection: { telephone: true, email: true, address: true },
   alternates: { canonical: "/" },
   icons: {
-    icon: "/ajfan-logo.png",
-    shortcut: "/ajfan-logo.png",
-    apple: "/ajfan-logo.png",
+    icon: "/ajfan-logo.webp",
+    shortcut: "/ajfan-logo.webp",
+    apple: "/ajfan-logo.webp",
   },
   openGraph: {
     type: "website",
@@ -39,13 +40,13 @@ export const metadata: Metadata = {
     title: `${siteName} | UAE Government & Business Services`,
     description: siteDescription,
     locale: "en_AE",
-    images: [{ url: "/images/ajfan-hero-services.png", width: 1790, height: 897, alt: "AJFAN UAE government and business services" }],
+    images: [{ url: "/images/ajfan-hero-services.webp", width: 1790, height: 897, alt: "AJFAN UAE government and business services" }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${siteName} | UAE Government & Business Services`,
     description: siteDescription,
-    images: ["/images/ajfan-hero-services.png"],
+    images: ["/images/ajfan-hero-services.webp"],
   },
   robots: {
     index: true,
@@ -63,18 +64,19 @@ export const metadata: Metadata = {
 const structuredData = [
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["LocalBusiness", "ProfessionalService"],
     "@id": `${siteUrl}/#business`,
     name: siteName,
     alternateName: siteAlternateName,
     url: siteUrl,
-    image: `${siteUrl}/images/ajfan-hero-services.png`,
-    logo: { "@type": "ImageObject", url: `${siteUrl}/ajfan-logo.png` },
+    image: `${siteUrl}/images/ajfan-hero-services.webp`,
+    logo: { "@type": "ImageObject", url: `${siteUrl}/ajfan-logo.webp` },
     description: siteDescription,
     telephone: businessPhone,
     email: businessEmail,
     priceRange: "$$",
     address: businessLocations[0].address,
+    hasMap: businessLocations[0].map,
     location: businessLocations.map((location) => ({
       "@type": "Place",
       name: location.name,
@@ -87,6 +89,14 @@ const structuredData = [
       { "@type": "Country", name: "United Arab Emirates" },
     ],
     availableLanguage: ["English", "Arabic"],
+    knowsAbout: [
+      "UAE visa services",
+      "PRO services",
+      "typing and document clearing",
+      "MOFA attestation",
+      "Arabic and English translation",
+      "business setup in the UAE",
+    ],
     sameAs: socialProfiles,
     contactPoint: {
       "@type": "ContactPoint",
@@ -126,7 +136,7 @@ const structuredData = [
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en-AE">
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
         {children}

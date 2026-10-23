@@ -9,14 +9,14 @@ export const metadata = pageMetadata({
   title: "Contact AJFAN Documents Clearing UAE",
   description: "Contact AJFAN Documents Clearing in Sharjah for UAE visa, PRO, typing, documentation and business setup support.",
   path: "/contact",
-  image: "/images/ajfan-business-setup.png",
+  image: "/images/ajfan-business-setup.webp",
   keywords: ["contact UAE government services", "AJFAN Documents Clearing Sharjah", "UAE visa WhatsApp"],
 });
 
 export default function ContactPage() {
   return (
     <PageFrame>
-      <Hero image="/images/ajfan-business-setup.png" label="Contact" title="Talk to Our Team" description="Tell us what you need â€” our team will review your requirement and guide you on the next steps." />
+      <Hero image="/images/ajfan-business-setup.webp" label="Contact" title="Talk to Our Team" description="Tell us what you need â€” our team will review your requirement and guide you on the next steps." />
       <section className="section">
         <div className="container center">
           <div className="eyebrow">â€” Get In Touch</div>

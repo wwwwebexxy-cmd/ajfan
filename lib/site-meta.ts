@@ -20,10 +20,15 @@ export const siteKeywords = [
   "PRO services UAE",
   "business setup UAE",
   "typing services Sharjah",
+  "typing centre Sharjah",
+  "visa typing Sharjah",
+  "document clearing Sharjah",
   "document clearing UAE",
   "MOFA attestation UAE",
   "translation services UAE",
   "Emirates ID services",
+  "corporate PRO support Sharjah",
+  "mainland business setup Sharjah",
 ];
 
 export const businessLocations = [
@@ -43,7 +48,7 @@ export function pageMetadata({
   title,
   description,
   path,
-  image = "/images/ajfan-hero-services.png",
+  image = "/images/ajfan-hero-services.webp",
   keywords = [],
 }: {
   title: string;
@@ -62,6 +67,13 @@ export function pageMetadata({
     authors: [{ name: siteName, url: siteUrl }],
     creator: siteName,
     publisher: siteName,
+    formatDetection: { telephone: true, email: true, address: true },
+    other: {
+      "geo.region": "AE-SH",
+      "geo.placename": "Sharjah, United Arab Emirates",
+      "business:contact_data:locality": "Sharjah",
+      "business:contact_data:country_name": "United Arab Emirates",
+    },
     openGraph: {
       type: "website",
       url,

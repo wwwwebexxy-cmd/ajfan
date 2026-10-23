@@ -5,6 +5,7 @@ import { ProcessSection } from "@/components/process-section";
 import { WhyChooseSection } from "@/components/why-choose-section";
 import { contentImages } from "@/data/site-data";
 import { pageMetadata } from "@/lib/site-meta";
+import { Check } from "lucide-react";
 
 export const metadata = pageMetadata({
   title: "About AJFAN Documents Clearing UAE",
@@ -16,7 +17,7 @@ export const metadata = pageMetadata({
 export default function AboutPage() {
   return (
     <PageFrame>
-      <Hero image="/images/ajfan-hero-services.png" label="About Us" title="Making UAE Services Simple & Hassle-Free" description="AJFAN Documents Clearing is a professional services team based in Sharjah, supporting individuals, families, entrepreneurs and companies across the UAE." />
+      <Hero image="/images/ajfan-hero-services.webp" label="About Us" title="Making UAE Services Simple & Hassle-Free" description="AJFAN Documents Clearing is a professional services team based in Sharjah, supporting individuals, families, entrepreneurs and companies across the UAE." />
       <section className="section">
         <div className="container split">
           <div>
@@ -28,7 +29,7 @@ export default function AboutPage() {
             <p className="subtitle">We understand that every client has unique goals and challenges. That is why we take a personalised approach, offering practical guidance, transparent communication, and professional support at every stage of the journey.</p>
             <p className="subtitle">At AJFAN Documents Clearing, our mission is to simplify business processes, create valuable opportunities, and build lasting relationships based on trust, integrity, and excellence.</p>
             <p className="about-tagline">AJFAN Documents Clearing â€” Your Vision. Our Commitment. Shared Success.</p>
-            <ul className="about-pillars">{["Professional guidance on every procedure", "Accurate documentation and typing", "Clear communication at every step", "Support through phone and WhatsApp"].map((item) => <li key={item}><span className="pillar-check">âœ“</span> {item}</li>)}</ul>
+            <ul className="about-pillars">{["Professional guidance on every procedure", "Accurate documentation and typing", "Clear communication at every step", "Support through phone and WhatsApp"].map((item) => <li key={item}><span className="pillar-check" aria-hidden="true"><Check size={13} strokeWidth={3} /></span><span>{item}</span></li>)}</ul>
             <a className="btn dark" href="https://wa.me/971529812786">Talk to Our Team</a>
           </div>
           <div className="photo" style={{ backgroundImage: `url(${contentImages.corporate})` }} />

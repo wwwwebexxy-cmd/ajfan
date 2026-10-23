@@ -5,7 +5,7 @@ export function Brand({ dark = false }: { dark?: boolean }) {
     <span className={`brand ${dark ? "brand-dark" : ""}`}>
       <Image
         className="brand-logo"
-        src={dark ? "/ajfan-logo-transparent.png" : "/ajfan-logo.png"}
+        src={dark ? "/ajfan-logo-transparent.webp" : "/ajfan-logo.webp"}
         alt="AJFAN Documents Clearing"
         width={5100}
         height={3111}

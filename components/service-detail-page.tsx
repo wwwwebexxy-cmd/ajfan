@@ -45,7 +45,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
         serviceType: service.title,
         description: service.detail,
         url: `${siteUrl}/${slug}`,
-        image: new URL(service.image ?? "/images/ajfan-hero-services.png", siteUrl).toString(),
+        image: new URL(service.image ?? "/images/ajfan-hero-services.webp", siteUrl).toString(),
         provider: {
           "@id": `${siteUrl}/#business`,
           "@type": "LocalBusiness",
@@ -134,7 +134,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
 
           <div className="service-sidebar">
             <div className="service-photo-wrap">
-              <img src={service.image ?? "/images/ajfan-hero-services.png"} alt={service.title} className="service-photo-image" />
+              <img src={service.image ?? "/images/ajfan-hero-services.webp"} alt={service.title} className="service-photo-image" />
             </div>
             <div className="service-documents">
               <div className="service-documents-heading">

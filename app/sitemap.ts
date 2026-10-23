@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
-import { navigation, seoServiceDetails } from "@/data/site-data";
+import { navigation, seoServiceDetails, serviceDetails } from "@/data/site-data";
 import { siteUrl } from "@/lib/site-meta";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = Array.from(new Set([
     ...navigation.map(([path]) => path),
+    ...Object.keys(serviceDetails).map((slug) => `/${slug}`),
     ...Object.keys(seoServiceDetails).map((slug) => `/${slug}`),
   ]));
 
