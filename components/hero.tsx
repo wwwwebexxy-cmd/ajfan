@@ -49,7 +49,7 @@ export function Hero({ label, title, description, home = false, image }: HeroPro
               <strong>Visa &amp; PRO support</strong>
               <span>Professional guidance</span>
             </div>
-            <div className="hero-visual-badge"><span>AE</span><strong>Sharjah</strong><small>Serving the UAE</small></div>
+            <div className="hero-visual-badge"><span>AE</span><strong>Abu Dhabi</strong><small>Serving the UAE</small></div>
           </div>
         </div>
       </section>

@@ -22,7 +22,7 @@ export function SiteHeader() {
       <div className="topbar">
         <div className="container topbar-content">
           <div className="topbar-group">
-            <span className="topbar-group"><MapPin size={15} className="gold" /> Sharjah, UAE</span>
+            <span className="topbar-group"><MapPin size={15} className="gold" /> Abu Dhabi, UAE</span>
             <span>|</span>
             <span>Professional UAE Government &amp; Business Services</span>
           </div>

@@ -7,10 +7,10 @@ import { pageMetadata } from "@/lib/site-meta";
 
 export const metadata = pageMetadata({
   title: "Contact AJFAN Documents Clearing UAE",
-  description: "Contact AJFAN Documents Clearing in Sharjah for UAE visa, PRO, typing, documentation and business setup support.",
+  description: "Contact AJFAN Documents Clearing in Abu Dhabi for UAE visa, PRO, typing, documentation and business setup support.",
   path: "/contact",
   image: "/images/ajfan-business-setup.webp",
-  keywords: ["contact UAE government services", "AJFAN Documents Clearing Sharjah", "UAE visa WhatsApp"],
+  keywords: ["contact UAE government services", "AJFAN Documents Clearing Abu Dhabi", "UAE visa WhatsApp"],
 });
 
 export default function ContactPage() {
@@ -25,7 +25,7 @@ export default function ContactPage() {
           <div className="contact-cards">
             <ContactCard type="whatsapp" title="WhatsApp" description="Fastest way to reach our team. Send your requirement and documents anytime." label="WhatsApp Us" href="https://wa.me/971529812786" />
             <ContactCard type="phone" title="Phone" description="Call us directly on 0529812786 during working hours." label="Call Now" href="tel:+971529812786" />
-            <ContactCard type="office" title="Office" description="Shams Business Centre, Media City Free Zone, Al Messaned, Sharjah." label="Get Directions" href="https://maps.google.com/?q=Shams+Business+Centre+Media+City+Free+Zone+Al+Messaned+Sharjah" />
+            <ContactCard type="office" title="Office" description="Al Ghalah St, Al Nahyan, Zone 1, Abu Dhabi." label="Get Directions" href="https://maps.google.com/?q=Ajfan+Typing+%26+Studio+Al+Ghalah+St+Al+Nahyan+Abu+Dhabi" />
           </div>
           <div className="contact-note"><Clock size={16} className="gold" /> WhatsApp messages are welcome anytime â€” we respond as soon as possible.</div>
         </div>

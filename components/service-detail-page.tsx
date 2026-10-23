@@ -55,7 +55,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
           email: businessEmail,
         },
         areaServed: [
-          { "@type": "City", name: "Sharjah" },
+          { "@type": "City", name: "Abu Dhabi" },
           { "@type": "City", name: "Dubai" },
           { "@type": "Country", name: "United Arab Emirates" },
         ],

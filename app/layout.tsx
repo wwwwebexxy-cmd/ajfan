@@ -84,7 +84,7 @@ const structuredData = [
       hasMap: location.map,
     })),
     areaServed: [
-      { "@type": "City", name: "Sharjah" },
+      { "@type": "City", name: "Abu Dhabi" },
       { "@type": "City", name: "Dubai" },
       { "@type": "Country", name: "United Arab Emirates" },
     ],

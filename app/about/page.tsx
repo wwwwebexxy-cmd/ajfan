@@ -9,15 +9,15 @@ import { Check } from "lucide-react";
 
 export const metadata = pageMetadata({
   title: "About AJFAN Documents Clearing UAE",
-  description: "Learn about AJFAN Documents Clearing, a Sharjah-based team providing professional UAE visa, PRO, typing and business services.",
+  description: "Learn about AJFAN Documents Clearing, an Abu Dhabi-based team providing professional UAE visa, PRO, typing and business services.",
   path: "/about",
-  keywords: ["about AJFAN Documents Clearing", "AJFAN Documents Clearing", "Sharjah government services", "UAE business support"],
+  keywords: ["about AJFAN Documents Clearing", "AJFAN Documents Clearing", "Abu Dhabi government services", "UAE business support"],
 });
 
 export default function AboutPage() {
   return (
     <PageFrame>
-      <Hero image="/images/ajfan-hero-services.webp" label="About Us" title="Making UAE Services Simple & Hassle-Free" description="AJFAN Documents Clearing is a professional services team based in Sharjah, supporting individuals, families, entrepreneurs and companies across the UAE." />
+      <Hero image="/images/ajfan-hero-services.webp" label="About Us" title="Making UAE Services Simple & Hassle-Free" description="AJFAN Documents Clearing is a professional services team based in Abu Dhabi, supporting individuals, families, entrepreneurs and companies across the UAE." />
       <section className="section">
         <div className="container split">
           <div>

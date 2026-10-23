@@ -8,7 +8,7 @@ export function HomeAboutIntro() {
         <div className="home-about-image-wrap">
           <div className="home-about-frame" />
           <div className="home-about-image" />
-          <div className="home-about-badge"><strong>Sharjah</strong><span>Serving all of the UAE</span></div>
+          <div className="home-about-badge"><strong>Abu Dhabi</strong><span>Serving all of the UAE</span></div>
         </div>
         <div>
           <div className="eyebrow">â€” About AJFAN Documents Clearing</div>

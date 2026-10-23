@@ -11,7 +11,7 @@ export const metadata = pageMetadata({
   title: "UAE Government & Business Services",
   description: "Explore UAE visa, PRO, typing, document clearing, attestation, translation and business setup services from AJFAN Documents Clearing.",
   path: "/services",
-  keywords: ["UAE government services", "typing services UAE", "document clearing UAE", "business services Sharjah"],
+  keywords: ["UAE government services", "typing services UAE", "document clearing UAE", "business services Abu Dhabi"],
 });
 
 export default function ServicesPage() {

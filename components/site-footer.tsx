@@ -42,8 +42,8 @@ export function SiteFooter() {
               <h4>CONTACT</h4>
               <div className="footer-addresses">
                 <div className="footer-address">
-                  <strong>SHARJAH</strong>
-                  <p>Shams Business Centre,<br />Media City Free Zone,<br />Al Messaned, Sharjah</p>
+                  <strong>ABU DHABI</strong>
+                  <p>Al Ghalah St,<br />Al Nahyan, Zone 1,<br />Abu Dhabi</p>
                 </div>
               </div>
               <div className="footer-contact-links">
