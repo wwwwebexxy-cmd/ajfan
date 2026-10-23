@@ -9,7 +9,7 @@ import { pageMetadata } from "@/lib/site-meta";
 
 export const metadata = pageMetadata({
   title: "UAE Government & Business Services",
-  description: "Explore UAE visa, PRO, typing, document clearing, attestation, translation and business setup services from DSN Groups.",
+  description: "Explore UAE visa, PRO, typing, document clearing, attestation, translation and business setup services from AJFAN Documents Clearing.",
   path: "/services",
   keywords: ["UAE government services", "typing services UAE", "document clearing UAE", "business services Sharjah"],
 });
@@ -17,7 +17,7 @@ export const metadata = pageMetadata({
 export default function ServicesPage() {
   return (
     <PageFrame>
-      <Hero image="/images/generated-services-hero.webp" label="Our Services" title="Complete UAE Government & Business Solutions" description="Visa, PRO, typing, document clearing, attestation, translation and business setup services — all under one roof." />
+      <Hero image="/images/ajfan-document-clearing.png" label="Our Services" title="Complete UAE Government & Business Solutions" description="Visa, PRO, typing, document clearing, attestation, translation and business setup services â€” all under one roof." />
       <ServiceGrid />
       <ProcessSection />
       <FaqSection items={generalFaqs} />

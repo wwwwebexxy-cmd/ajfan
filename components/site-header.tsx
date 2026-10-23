@@ -27,14 +27,14 @@ export function SiteHeader() {
             <span>Professional UAE Government &amp; Business Services</span>
           </div>
           <div className="topbar-group">
-            <a href="tel:+971543145156"><Phone size={15} /> +971 54 314 5156</a>
-            <a className="whatsapp" href="https://wa.me/971543145156"><MessageCircle size={15} /> WhatsApp Us</a>
+            <a href="tel:+971529812786"><Phone size={15} /> 0529812786</a>
+            <a className="whatsapp" href="https://wa.me/971529812786"><MessageCircle size={15} /> WhatsApp Us</a>
           </div>
         </div>
       </div>
       <nav className="nav">
         <div className="container">
-          <Link href="/" aria-label="DSN Groups home" onClick={() => setIsOpen(false)}><Brand /></Link>
+          <Link href="/" aria-label="AJFAN Documents Clearing home" onClick={() => setIsOpen(false)}><Brand /></Link>
           <div className="nav-links">
             {navigation.map(([href, label]) => <Link key={href} className={isActive(href) ? "active" : ""} href={href}>{label}</Link>)}
           </div>

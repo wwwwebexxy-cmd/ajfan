@@ -3,7 +3,13 @@ import { Mail, MessageCircle, Phone } from "lucide-react";
 import { SiFacebook, SiInstagram } from "react-icons/si";
 import { Brand } from "./brand";
 import { WhatsAppFloat } from "./whatsapp-float";
-import { businessEmail } from "@/lib/site-meta";
+
+const footerPhone = "0529812786";
+const footerPhoneHref = "tel:+971529812786";
+const footerWhatsAppHref = "https://wa.me/971529812786";
+const footerEmail = "ajfantyping@gmail.com";
+const footerInstagram = "https://www.instagram.com/ajfan_typing?dlrf=aWFscHhtcjNla2R4&utm_source=qr";
+const footerFacebook = "https://www.facebook.com/share/1FCMCfVwu2/?mibextid=wwXIfr";
 
 export function SiteFooter() {
   return (
@@ -13,7 +19,7 @@ export function SiteFooter() {
           <div className="footer-grid">
             <div>
               <Brand dark />
-              <h3 className="footer-tagline">DSN GROUPS<br /><small>DSN: DREAM STARTS NOW</small></h3>
+              <h3 className="footer-tagline">AJFAN DOCUMENTS CLEARING<br /><small>AJFAN TYPING SERVICES</small></h3>
               <p>Professional UAE typing, document clearing, government and business services for individuals, families and companies.</p>
             </div>
             <div>
@@ -41,21 +47,21 @@ export function SiteFooter() {
                 </div>
               </div>
               <div className="footer-contact-links">
-                <a href="tel:+971543145156"><Phone size={15} /> +971 54 314 5156</a>
-                <a href="https://wa.me/971543145156"><MessageCircle size={15} /> +971 54 314 5156</a>
-                <a href={`mailto:${businessEmail}`}><Mail size={15} /> {businessEmail}</a>
+                <a href={footerPhoneHref}><Phone size={15} /> {footerPhone}</a>
+                <a href={footerWhatsAppHref}><MessageCircle size={15} /> {footerPhone}</a>
+                <a href={`mailto:${footerEmail}`}><Mail size={15} /> {footerEmail}</a>
               </div>
               <div className="footer-socials" aria-label="Social media links">
-                <a href="https://www.instagram.com/dsngroups?utm_source=ig_web_button_share_sheet&vrfl=ZDNlZDc0MzIxNw==" target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram">
+                <a href={footerInstagram} target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram">
                   <SiInstagram aria-hidden="true" />
                 </a>
-                <a href="https://www.facebook.com/people/DSN-Groups/61594177463846/" target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook">
+                <a href={footerFacebook} target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook">
                   <SiFacebook aria-hidden="true" />
                 </a>
               </div>
             </div>
           </div>
-          <div className="copyright"><span>© 2026 DSN Groups. All rights reserved.</span><span className="footer-legal"><span>Privacy Policy</span><span>Terms of Service</span></span></div>
+          <div className="copyright"><span>Â© 2026 AJFAN Documents Clearing. All rights reserved.</span><span className="footer-legal"><span>Privacy Policy</span><span>Terms of Service</span></span></div>
         </div>
       </footer>
       <WhatsAppFloat />

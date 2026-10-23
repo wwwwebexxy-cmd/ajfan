@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 import type { ServiceDetail } from "@/data/site-data";
 
-export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://advancedsolution.ae").replace(/\/+$/, "");
-export const siteName = "DSN Groups";
-export const siteAlternateName = "DSN: Dream Starts Now";
-export const siteDescription = "DSN Groups provides professional UAE visa, PRO, typing, attestation, translation and business setup services in Sharjah and across the UAE.";
-export const businessPhone = "+971543145156";
-export const businessEmail = "info@dsngroups.com";
+export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3001").replace(/\/+$/, "");
+export const siteName = "AJFAN Documents Clearing";
+export const siteAlternateName = "AJFAN Typing";
+export const siteDescription = "AJFAN Documents Clearing provides professional UAE visa, PRO, typing, attestation, translation and business setup services in Sharjah and across the UAE.";
+export const businessPhone = "+971529812786";
+export const businessEmail = "ajfantyping@gmail.com";
 export const whatsappUrl = `https://wa.me/${businessPhone.replace(/\D/g, "")}`;
 export const socialProfiles = [
-  "https://www.instagram.com/dsngroups",
-  "https://www.facebook.com/people/DSN-Groups/61594177463846/",
+  "https://www.instagram.com/ajfan_typing?dlrf=aWFscHhtcjNla2R4&utm_source=qr",
+  "https://www.facebook.com/share/1FCMCfVwu2/?mibextid=wwXIfr",
 ];
 export const siteKeywords = [
-  "DSN Groups",
-  "DSN Dream Starts Now",
+  "AJFAN Documents Clearing",
+  "AJFAN Typing Services",
   "UAE government services",
   "visa services UAE",
   "PRO services UAE",
@@ -28,7 +28,7 @@ export const siteKeywords = [
 
 export const businessLocations = [
   {
-    name: "DSN Groups Sharjah Office",
+    name: "AJFAN Documents Clearing Sharjah Office",
     address: {
       "@type": "PostalAddress",
       streetAddress: "Shams Business Centre, Media City Free Zone, Al Messaned",
@@ -43,7 +43,7 @@ export function pageMetadata({
   title,
   description,
   path,
-  image = "/images/hero-uae-services.webp",
+  image = "/images/ajfan-hero-services.png",
   keywords = [],
 }: {
   title: string;

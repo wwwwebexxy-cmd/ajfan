@@ -10,8 +10,8 @@ export function CtaSection() {
         <h2>Need Assistance With a UAE Service?</h2>
         <p>Tell us what you need. Our team will review your requirement and guide you on the next steps.</p>
         <div className="actions">
-          <a className="btn green cta-whatsapp" href="https://wa.me/971543145156" target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> WhatsApp Us Now</a>
-          <a className="btn cta-call" href="tel:+971543145156"><Phone size={18} /> Call Us</a>
+          <a className="btn green cta-whatsapp" href="https://wa.me/971529812786" target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> WhatsApp Us Now</a>
+          <a className="btn cta-call" href="tel:+971529812786"><Phone size={18} /> Call Us</a>
         </div>
       </div>
     </section>

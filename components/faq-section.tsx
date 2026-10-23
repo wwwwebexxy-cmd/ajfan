@@ -43,7 +43,7 @@ export function FaqSection({ questions, items, showCta = true }: { questions?: s
             );
           })}
         </div>
-        {showCta && <a className="faq-ask-button" href="https://wa.me/971543145156" target="_blank" rel="noopener noreferrer">Ask Us Your Question</a>}
+        {showCta && <a className="faq-ask-button" href="https://wa.me/971529812786" target="_blank" rel="noopener noreferrer">Ask Us Your Question</a>}
       </div>
     </section>
   );

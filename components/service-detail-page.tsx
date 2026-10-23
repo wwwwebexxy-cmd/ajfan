@@ -45,7 +45,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
         serviceType: service.title,
         description: service.detail,
         url: `${siteUrl}/${slug}`,
-        image: new URL(service.image ?? "/images/hero-uae-services.webp", siteUrl).toString(),
+        image: new URL(service.image ?? "/images/ajfan-hero-services.png", siteUrl).toString(),
         provider: {
           "@id": `${siteUrl}/#business`,
           "@type": "LocalBusiness",
@@ -78,7 +78,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
     ],
   };
   const faqs = service.faqs ?? defaultFaqs;
-  const whatsappHref = `https://wa.me/971543145156?text=${encodeURIComponent(`Hello DSN Groups, I am interested in ${service.title}. Please share the requirements and procedure.`)}`;
+  const whatsappHref = `https://wa.me/971529812786?text=${encodeURIComponent(`Hello AJFAN Documents Clearing, I am interested in ${service.title}. Please share the requirements and procedure.`)}`;
   const ctaLabel = service.slug === "business-setup"
     ? "Start Your Business"
     : service.slug === "visa-services"
@@ -124,7 +124,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
                 <div className="service-process-step" key={number}>
                   <span className="service-process-dot" />
                   <div>
-                    <h3>{number} <span>—</span> {title}</h3>
+                    <h3>{number} <span>â€”</span> {title}</h3>
                     <p>{description}</p>
                   </div>
                 </div>
@@ -134,7 +134,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
 
           <div className="service-sidebar">
             <div className="service-photo-wrap">
-              <img src={service.image ?? "/images/hero-uae-services.webp"} alt={service.title} className="service-photo-image" />
+              <img src={service.image ?? "/images/ajfan-hero-services.png"} alt={service.title} className="service-photo-image" />
             </div>
             <div className="service-documents">
               <div className="service-documents-heading">
@@ -144,7 +144,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
               <ul>
                 {service.documents.map((document) => <li key={document}><Check size={16} /> <span>{document}</span></li>)}
               </ul>
-              <p className="service-documents-note">Exact requirements depend on your case — send your documents on WhatsApp for a quick review.</p>
+              <p className="service-documents-note">Exact requirements depend on your case â€” send your documents on WhatsApp for a quick review.</p>
             </div>
             <a className="service-page-cta" href={whatsappHref} target="_blank" rel="noopener noreferrer">
               <MessageCircle size={18} /> {ctaLabel}

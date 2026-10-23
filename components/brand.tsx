@@ -5,10 +5,10 @@ export function Brand({ dark = false }: { dark?: boolean }) {
     <span className={`brand ${dark ? "brand-dark" : ""}`}>
       <Image
         className="brand-logo"
-        src="/dsn-group-logo.webp"
-        alt="DSN Groups — DSN: Dream Starts Now"
-        width={3592}
-        height={2412}
+        src={dark ? "/ajfan-logo-transparent.png" : "/ajfan-logo.png"}
+        alt="AJFAN Documents Clearing"
+        width={5100}
+        height={3111}
         sizes={dark ? "180px" : "132px"}
         priority={!dark}
       />

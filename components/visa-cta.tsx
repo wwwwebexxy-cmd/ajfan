@@ -12,7 +12,7 @@ export function VisaCta() {
         </div>
         <div className="actions">
           <Link className="btn gold" href="/visa-services">Explore Visa Services <ArrowRight size={16} /></Link>
-          <a className="btn outline-light" href="https://wa.me/971543145156"><MessageCircle size={17} /> Ask on WhatsApp</a>
+          <a className="btn outline-light" href="https://wa.me/971529812786"><MessageCircle size={17} /> Ask on WhatsApp</a>
         </div>
       </div>
     </section>
