@@ -24,7 +24,7 @@ export default function AboutPage() {
             <div className="eyebrow">â€” Who We Are</div>
             <h2 className="title">About AJFAN Documents Clearing</h2>
             <p className="subtitle">At AJFAN Documents Clearing, we are committed to empowering entrepreneurs, investors, individuals, and businesses with reliable, efficient, and tailored business solutions.</p>
-            <p className="subtitle">With a strategic focus on the United Arab Emirates (UAE) and Europe, we provide a wide range of business setup, corporate support, and consultancy services designed to help our clients establish, manage, and grow with confidence.</p>
+            <p className="subtitle">With a strategic focus on the United Arab Emirates (UAE), we provide a wide range of business setup, corporate support, and consultancy services designed to help our clients establish, manage, and grow with confidence.</p>
             <p className="subtitle">Our services include company formation and licensing, corporate administration, PRO services, visa assistance, HR consultancy, and connections to personal and business financing opportunities through our trusted service partners.</p>
             <p className="subtitle">We understand that every client has unique goals and challenges. That is why we take a personalised approach, offering practical guidance, transparent communication, and professional support at every stage of the journey.</p>
             <p className="subtitle">At AJFAN Documents Clearing, our mission is to simplify business processes, create valuable opportunities, and build lasting relationships based on trust, integrity, and excellence.</p>

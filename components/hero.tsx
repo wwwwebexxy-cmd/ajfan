@@ -46,7 +46,7 @@ export function Hero({ label, title, description, home = false, image }: HeroPro
             </div>
             <div className="hero-float-card hero-float-card-service">
               <span className="hero-float-card-kicker">AJFAN SERVICES</span>
-              <strong>Visa &amp; PRO support</strong>
+              <strong>Family visa service PRO &amp; Business consultancy</strong>
               <span>Professional guidance</span>
             </div>
             <div className="hero-visual-badge"><span>AE</span><strong>Abu Dhabi</strong><small>Serving the UAE</small></div>

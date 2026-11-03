@@ -65,13 +65,13 @@ export const services: Service[] = [
   },
   {
     slug: "visa-services",
-    title: "Visa Services",
+    title: "Family visa service",
     description: "Employment, family, residence, visit, investor, partner, Green and Golden Visa assistance.",
     icon: BadgeCheck,
   },
   {
     slug: "mofa-attestation",
-    title: "MOFA Attestation",
+    title: "Certificate Attestation Services",
     description: "Assistance with educational, personal, commercial and other document attestation requirements.",
     icon: Stamp,
   },
@@ -83,7 +83,7 @@ export const services: Service[] = [
   },
   {
     slug: "typing-documents",
-    title: "Typing & Documents",
+    title: "Typing & Documents Clearing",
     description: "Professional typing, document clearing, government applications and documentation support.",
     icon: FileText,
   },
@@ -92,8 +92,8 @@ export const services: Service[] = [
 export const serviceDetails: Record<string, ServiceDetail> = {
   "visa-services": {
     ...services[2],
-    title: "Visa Services in UAE",
-    label: "VISA SERVICES",
+    title: "Family visa service in UAE",
+    label: "FAMILY VISA SERVICE",
     detail: "Employment, family, residence, visit, investor, partner, Green and Golden Visa assistance with accurate documentation and clear communication.",
     image: "/images/ajfan-visa-support.webp",
     items: ["Employment Visa", "Family Visa", "Residence Visa", "Visit Visa", "Investor & Partner Visa", "Green & Golden Visa", "Visa Renewal", "Visa Cancellation", "Change of Status", "Entry Permit", "Medical Typing", "Emirates ID"],
@@ -129,7 +129,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     faqs: [
       { q: "Mainland or free zone - which is right for me?", a: "It depends on your activity, market and budget. Share your plans with us and we will explain the suitable options." },
       { q: "Can you help with the trade license?", a: "Yes. We assist with new trade licenses, renewals and related government approvals." },
-      { q: "Can I get an investor visa?", a: "Yes. We assist with investor and partner visa services linked to your company setup." },
+      { q: "Can I get an investor visa?", a: "Yes. We assist with investor and partner visa support linked to your company setup." },
     ],
   },
   "corporate-services": {
@@ -254,12 +254,12 @@ const seoServiceFaqs: Record<string, { q: string; a: string }[]> = {
 
 export const seoServiceDetails: Record<string, ServiceDetail> = {
   "typing-documents": seoService("typing-documents", "Typing & Documents UAE", "Typing & Document Clearing Services in UAE", "Professional typing, document clearing and government application support in Abu Dhabi, Dubai and across the UAE, with clear guidance on requirements and next steps.", "/images/ajfan-document-clearing.webp", ["Government Application Typing", "Visa & Emirates ID Typing", "Document Clearing", "Immigration & Labour Applications", "Online Form Assistance", "Application Status Guidance"], ["Passport copy", "Current visa or entry permit", "Emirates ID copy where applicable", "Passport-size photograph", "Supporting documents for the application"]),
-  "mofa-attestation": seoService("mofa-attestation", "MOFA Attestation UAE", "MOFA Attestation Services in UAE", "Assistance with educational, personal and commercial document attestation requirements, translation coordination and submission guidance in the UAE.", "/images/ajfan-attestation-translation.webp", ["Educational Certificate Attestation", "Personal Document Attestation", "Commercial Document Attestation", "Document Review", "Translation Coordination", "Submission Guidance"], ["Original document or clear scan", "Passport copy", "Emirates ID copy where applicable", "Existing attestation stamps", "Translation or supporting documents where required"]),
+  "mofa-attestation": seoService("mofa-attestation", "Certificate Attestation Services UAE", "Certificate Attestation Services in UAE", "Assistance with educational, personal, commercial and other document attestation requirements, translation coordination and submission guidance in the UAE.", "/images/ajfan-attestation-translation.webp", ["Educational Certificate Attestation", "Personal Document Attestation", "Commercial Document Attestation", "Marriage & Birth Certificate", "MOFA & Certificate Equivalency", "Document Review", "Translation Coordination", "Submission Guidance"], ["Original document or clear scan", "Passport copy", "Emirates ID copy where applicable", "Existing attestation stamps", "Translation or supporting documents where required"]),
   "translation-services": seoService("translation-services", "Translation Services UAE", "Arabic & English Translation Services in UAE", "Arabic and English translation assistance for official, legal, personal and business documents, with guidance on the format needed for your UAE application.", "/images/ajfan-attestation-translation.webp", ["Arabic-English Translation", "Official Document Translation", "Legal Document Translation", "Certificate Translation", "Business Document Translation", "Attestation-Ready Translation Guidance"], ["Clear copy of the document", "Passport or Emirates ID copy where required", "Purpose of the translation", "Existing authority requirements", "Preferred language and format"]),
-  "employment-visa-uae": seoService("employment-visa-uae", "Employment Visa UAE", "Employment Visa Services in UAE", "Complete employment visa assistance â€” from entry permit to residence visa stamping â€” for companies hiring employees and individuals starting work in the UAE.", "/images/ajfan-visa-support.webp", ["Entry Permit", "Status Change", "Medical Typing", "Emirates ID", "Residence Visa", "Visa Cancellation"], ["Passport copy (valid for 6+ months)", "Passport-size photograph (white background)", "Company trade license copy (sponsor)", "Offer letter or labour approval details", "Current visa page or entry stamp"]),
-  "family-visa-uae": seoService("family-visa-uae", "Family Visa UAE", "Family Visa Services in UAE", "Bring your family to the UAE with confidence. We assist with spouse, children and parent residence visas, guiding you through eligibility, documents and each step of the process.", "/images/ajfan-visa-support.webp", ["Spouse Visa", "Children Visa", "Parents Visa", "Entry Permit", "Residence Visa", "Renewal & Cancellation"], ["Sponsor passport, visa and Emirates ID copies", "Attested marriage certificate", "Attested birth certificates", "Family passport copies and photographs", "Tenancy contract and salary proof"]),
-  "residence-visa-uae": seoService("residence-visa-uae", "Residence Visa UAE", "Residence Visa Services in UAE", "New residence visas, renewals and status changes â€” handled with accurate typing, correct documentation and clear guidance at every step.", "/images/ajfan-visa-support.webp", ["New Residence Visa", "Residence Visa Renewal", "Medical Typing", "Emirates ID", "Status Change", "Visa Cancellation"], ["Passport copy (valid)", "Passport-size photograph", "Entry permit or current visa page", "Sponsor documents", "Emirates ID copy for renewals"]),
-  "visit-visa-uae": seoService("visit-visa-uae", "Visit Visa UAE", "Visit Visa Services in UAE", "Visit visa assistance for family, friends and business visitors â€” new applications, extensions and status changes handled quickly and professionally.", "/images/ajfan-visa-support.webp", ["30 / 60 / 90-Day Visit Visas", "Visit Visa Extension", "Multiple Entry Options", "Family & Friend Visits", "Status Change", "Application Typing"], ["Visitor passport copy", "Passport-size photograph", "Sponsor Emirates ID and visa copy", "Relationship proof", "Travel details where required"]),
+  "employment-visa-uae": seoService("employment-visa-uae", "Employment Visa UAE", "Employment Visa Assistance in UAE", "Complete employment visa assistance â€” from entry permit to residence visa stamping â€” for companies hiring employees and individuals starting work in the UAE.", "/images/ajfan-visa-support.webp", ["Entry Permit", "Status Change", "Medical Typing", "Emirates ID", "Residence Visa", "Visa Cancellation"], ["Passport copy (valid for 6+ months)", "Passport-size photograph (white background)", "Company trade license copy (sponsor)", "Offer letter or labour approval details", "Current visa page or entry stamp"]),
+  "family-visa-uae": seoService("family-visa-uae", "Family Visa UAE", "Family visa service in UAE", "Bring your family to the UAE with confidence. We assist with spouse, children and parent residence visas, guiding you through eligibility, documents and each step of the process.", "/images/ajfan-visa-support.webp", ["Spouse Visa", "Children Visa", "Parents Visa", "Entry Permit", "Residence Visa", "Renewal & Cancellation"], ["Sponsor passport, visa and Emirates ID copies", "Attested marriage certificate", "Attested birth certificates", "Family passport copies and photographs", "Tenancy contract and salary proof"]),
+  "residence-visa-uae": seoService("residence-visa-uae", "Residence Visa UAE", "Residence Visa Assistance in UAE", "New residence visas, renewals and status changes â€” handled with accurate typing, correct documentation and clear guidance at every step.", "/images/ajfan-visa-support.webp", ["New Residence Visa", "Residence Visa Renewal", "Medical Typing", "Emirates ID", "Status Change", "Visa Cancellation"], ["Passport copy (valid)", "Passport-size photograph", "Entry permit or current visa page", "Sponsor documents", "Emirates ID copy for renewals"]),
+  "visit-visa-uae": seoService("visit-visa-uae", "Visit Visa UAE", "Visit Visa Assistance in UAE", "Visit visa assistance for family, friends and business visitors â€” new applications, extensions and status changes handled quickly and professionally.", "/images/ajfan-visa-support.webp", ["30 / 60 / 90-Day Visit Visas", "Visit Visa Extension", "Multiple Entry Options", "Family & Friend Visits", "Status Change", "Application Typing"], ["Visitor passport copy", "Passport-size photograph", "Sponsor Emirates ID and visa copy", "Relationship proof", "Travel details where required"]),
   "visa-renewal-uae": seoService("visa-renewal-uae", "Visa Renewal UAE", "Visa Renewal Services in UAE", "Renew residence and dependent visas on time, without the stress. We manage typing, medical, Emirates ID and renewal processing with clear communication throughout.", "/images/ajfan-visa-support.webp", ["Residence Visa Renewal", "Dependent Visa Renewal", "Employee Visa Renewal", "Medical Typing", "Emirates ID Renewal", "Grace Period Guidance"], ["Passport copy", "Current residence visa page", "Emirates ID copy", "Passport-size photograph", "Sponsor documents"]),
   "visa-cancellation-uae": seoService("visa-cancellation-uae", "Visa Cancellation UAE", "Visa Cancellation Services in UAE", "Cancelling an employment, family or residence visa? We handle the cancellation process correctly so you can exit, transfer or change status without complications.", "/images/ajfan-visa-support.webp", ["Employment Visa Cancellation", "Family Visa Cancellation", "Residence Visa Cancellation", "Company Card Cancellation", "Status Change After Cancellation", "Exit & Transfer Guidance"], ["Passport copy", "Current visa page", "Emirates ID copy", "Sponsor or company documents", "Cancellation request details"]),
   "change-status-uae": seoService("change-status-uae", "Change Status UAE", "Change Status Services in UAE", "Moving from a visit visa to a residence visa, or between visa categories? We assist with in-country status change procedures and the related documentation.", "/images/ajfan-visa-support.webp", ["Visit to Residence Status Change", "In-Country Status Change", "Status Change After Cancellation", "Entry Permit Status Update", "Visa Transfer Guidance", "Related Documentation"], ["Passport copy", "Current visa or entry permit", "New sponsor documents", "Passport-size photograph", "Previous cancellation paper"]),
@@ -312,10 +312,10 @@ export const testimonials = [
 ];
 
 export const generalFaqs = [
-  { q: "What services does AJFAN Documents Clearing provide?", a: "We assist with UAE visa services, PRO procedures, typing and document clearing, attestation, translation, corporate support and business setup." },
+  { q: "What services does AJFAN Documents Clearing provide?", a: "We assist with family visa service in the UAE, PRO procedures, typing and document clearing, attestation, translation, corporate support and business setup." },
   { q: "Do you provide corporate PRO services?", a: "Yes. We support companies with employee visa processing, immigration procedures, government applications and recurring documentation." },
   { q: "Can you assist with family visas?", a: "Yes. We assist with spouse, children and parent residence visa applications, renewals, cancellations and related documentation." },
-  { q: "Do you provide MOFA attestation assistance?", a: "Yes. We help review documents and guide you through the applicable attestation and submission requirements." },
+  { q: "Do you provide Certificate Attestation Services?", a: "Yes. We help review documents and guide you through the applicable attestation and submission requirements." },
   { q: "Can you help with business setup?", a: "Yes. We assist with mainland and free zone setup, trade licences, establishment documentation and investor or partner visa support." },
   { q: "Can I send my documents through WhatsApp?", a: "Yes. You can send your initial requirement and available documents through WhatsApp for a preliminary review." },
   { q: "How long does a service take?", a: "Timelines depend on the service, authority and individual case. We explain the expected process after reviewing your requirement." },

@@ -90,10 +90,10 @@ const structuredData = [
     ],
     availableLanguage: ["English", "Arabic"],
     knowsAbout: [
-      "UAE visa services",
+      "Family visa service UAE",
       "PRO services",
       "typing and document clearing",
-      "MOFA attestation",
+      "certificate attestation services",
       "Arabic and English translation",
       "business setup in the UAE",
     ],

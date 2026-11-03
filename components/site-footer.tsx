@@ -24,11 +24,11 @@ export function SiteFooter() {
             </div>
             <div>
               <h4>SERVICES</h4>
-              <Link href="/visa-services">Visa Services</Link>
+              <Link href="/visa-services">Family visa service</Link>
               <Link href="/pro-services">PRO Services</Link>
               <Link href="/business-setup">Business Setup</Link>
               <Link href="/corporate-services">Corporate Services</Link>
-              <Link href="/services">MOFA Attestation</Link>
+              <Link href="/services">Certificate Attestation Services</Link>
               <Link href="/services">Translation Services</Link>
             </div>
             <div>

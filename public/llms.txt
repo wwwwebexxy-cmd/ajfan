@@ -14,14 +14,14 @@
 
 ## Main services
 
-- Visa services: /visa-services
+- Family visa service: /visa-services
 - PRO services: /pro-services
 - Business setup: /business-setup
 - Corporate services: /corporate-services
 - All services: /services
 - Contact: /contact
 - Typing and document clearing: /typing-documents
-- MOFA attestation: /mofa-attestation
+- Certificate Attestation Services: /mofa-attestation
 - Translation services: /translation-services
 
 ## Detailed service pages
@@ -47,7 +47,7 @@ Requirements and processing times depend on the service, authority and individua
 ## Direct answers
 
 Q: What does AJFAN Documents Clearing do?
-A: AJFAN Documents Clearing helps individuals, families, entrepreneurs and companies with UAE visa services, PRO procedures, typing, document clearing, MOFA attestation, translation, corporate support and business setup.
+A: AJFAN Documents Clearing helps individuals and families with family visa service in the UAE, PRO procedures, typing, document clearing, certificate attestation services, translation, corporate support and business setup.
 
 Q: Where is AJFAN Documents Clearing located?
 A: AJFAN Documents Clearing is based at Al Ghalah St, Al Nahyan, Zone 1, Abu Dhabi, United Arab Emirates, and supports clients across Abu Dhabi, Dubai and the UAE.
