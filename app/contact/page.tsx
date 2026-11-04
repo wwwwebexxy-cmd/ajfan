@@ -16,10 +16,10 @@ export const metadata = pageMetadata({
 export default function ContactPage() {
   return (
     <PageFrame>
-      <Hero image="/images/ajfan-business-setup.webp" label="Contact" title="Talk to Our Team" description="Tell us what you need â€” our team will review your requirement and guide you on the next steps." />
+      <Hero image="/images/ajfan-business-setup.webp" label="Contact" title="Talk to Our Team" description="Tell us what you need — our team will review your requirement and guide you on the next steps." />
       <section className="section">
         <div className="container center">
-          <div className="eyebrow">â€” Get In Touch</div>
+          <div className="eyebrow">— Get In Touch</div>
           <h2 className="title">Reach Us the Easy Way</h2>
           <p className="subtitle">No forms, no waiting. Message us on WhatsApp or call directly.</p>
           <div className="contact-cards">
@@ -27,7 +27,7 @@ export default function ContactPage() {
             <ContactCard type="phone" title="Phone" description="Call us directly on 0529812786 during working hours." label="Call Now" href="tel:+971529812786" />
             <ContactCard type="office" title="Office" description="Al Ghalah St, Al Nahyan, Zone 1, Abu Dhabi." label="Get Directions" href="https://maps.google.com/?q=Ajfan+Typing+%26+Studio+Al+Ghalah+St+Al+Nahyan+Abu+Dhabi" />
           </div>
-          <div className="contact-note"><Clock size={16} className="gold" /> WhatsApp messages are welcome anytime â€” we respond as soon as possible.</div>
+          <div className="contact-note"><Clock size={16} className="gold" /> WhatsApp messages are welcome anytime — we respond as soon as possible.</div>
         </div>
       </section>
       <CtaSection />

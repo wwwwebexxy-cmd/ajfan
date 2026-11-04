@@ -124,7 +124,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
                 <div className="service-process-step" key={number}>
                   <span className="service-process-dot" />
                   <div>
-                    <h3>{number} <span>â€”</span> {title}</h3>
+                    <h3>{number} <span>—</span> {title}</h3>
                     <p>{description}</p>
                   </div>
                 </div>
@@ -144,7 +144,7 @@ export function ServiceDetailPage({ slug }: { slug: string }) {
               <ul>
                 {service.documents.map((document) => <li key={document}><Check size={16} /> <span>{document}</span></li>)}
               </ul>
-              <p className="service-documents-note">Exact requirements depend on your case â€” send your documents on WhatsApp for a quick review.</p>
+              <p className="service-documents-note">Exact requirements depend on your case — send your documents on WhatsApp for a quick review.</p>
             </div>
             <a className="service-page-cta" href={whatsappHref} target="_blank" rel="noopener noreferrer">
               <MessageCircle size={18} /> {ctaLabel}

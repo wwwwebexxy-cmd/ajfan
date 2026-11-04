@@ -21,14 +21,14 @@ export default function AboutPage() {
       <section className="section">
         <div className="container split">
           <div>
-            <div className="eyebrow">â€” Who We Are</div>
+            <div className="eyebrow">— Who We Are</div>
             <h2 className="title">About AJFAN Documents Clearing</h2>
             <p className="subtitle">At AJFAN Documents Clearing, we are committed to empowering entrepreneurs, investors, individuals, and businesses with reliable, efficient, and tailored business solutions.</p>
             <p className="subtitle">With a strategic focus on the United Arab Emirates (UAE), we provide a wide range of business setup, corporate support, and consultancy services designed to help our clients establish, manage, and grow with confidence.</p>
             <p className="subtitle">Our services include company formation and licensing, corporate administration, PRO services, visa assistance, HR consultancy, and connections to personal and business financing opportunities through our trusted service partners.</p>
             <p className="subtitle">We understand that every client has unique goals and challenges. That is why we take a personalised approach, offering practical guidance, transparent communication, and professional support at every stage of the journey.</p>
             <p className="subtitle">At AJFAN Documents Clearing, our mission is to simplify business processes, create valuable opportunities, and build lasting relationships based on trust, integrity, and excellence.</p>
-            <p className="about-tagline">AJFAN Documents Clearing â€” Your Vision. Our Commitment. Shared Success.</p>
+            <p className="about-tagline">AJFAN Documents Clearing — Your Vision. Our Commitment. Shared Success.</p>
             <ul className="about-pillars">{["Professional guidance on every procedure", "Accurate documentation and typing", "Clear communication at every step", "Support through phone and WhatsApp"].map((item) => <li key={item}><span className="pillar-check" aria-hidden="true"><Check size={13} strokeWidth={3} /></span><span>{item}</span></li>)}</ul>
             <a className="btn dark" href="https://wa.me/971529812786">Talk to Our Team</a>
           </div>
