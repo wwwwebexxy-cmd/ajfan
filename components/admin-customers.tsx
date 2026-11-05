@@ -7,6 +7,7 @@ import { AdminApiError, createCustomer, Credentials, CustomerInput, deleteCustom
 import { AdminCustomerDetails, AdminDeleteCustomer, CustomerActionIcons } from "./admin-customer-dialogs";
 import { AdminDashboard } from "./admin-dashboard";
 import { AdminSidebar, AdminView } from "./admin-sidebar";
+import { AdminServices } from "./admin-services";
 import { Brand } from "./brand";
 
 const emptyCustomer: CustomerInput = {
@@ -128,7 +129,7 @@ export function AdminCustomers() {
     setSidebarOpen(false);
     setError("");
     setNotice("");
-    if (view === "dashboard") {
+    if (view !== "customers") {
       setShowForm(false);
       setEditingCustomer(null);
     }
@@ -306,6 +307,8 @@ export function AdminCustomers() {
 
           {activeView === "dashboard" ? (
             <AdminDashboard customers={customers} onNewCustomer={openNewCustomer} onOpenCustomers={() => navigateTo("customers")} />
+          ) : activeView === "services" ? (
+            <AdminServices credentials={credentials} onLogout={handleLogout} />
           ) : (
             <>
               <div className="admin-page-heading">

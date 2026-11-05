@@ -131,6 +131,16 @@ body {
 .admin-search-clear { position: absolute; top: 50%; right: 9px; width: 26px; height: 26px; display: grid; place-items: center; transform: translateY(-50%); border: 0; border-radius: 6px; color: var(--muted); background: transparent; cursor: pointer; }
 .admin-search-clear:hover { color: var(--navy); background: #f4fbf9; }
 .admin-search-help { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.admin-checkbox-field { display: flex; align-items: center; gap: 10px; align-self: end; min-height: 42px; padding: 10px 0; color: var(--navy); font-size: 12px; font-weight: 700; cursor: pointer; }
+.admin-checkbox-field input { width: 17px; height: 17px; margin: 0; accent-color: var(--gold-2); }
+.admin-image-field input { padding: 10px; border-style: dashed; }
+.admin-image-field > span { display: block; margin-top: -4px; color: var(--muted); font-size: 11px; font-weight: 500; }
+.admin-service-table .admin-service-thumb { width: 48px; height: 42px; display: block; overflow: hidden; border-radius: 7px; object-fit: cover; background: #f4fbf9; }
+.admin-service-thumb-empty { display: grid !important; place-items: center; color: var(--gold-2); }
+.admin-service-price { display: block; color: var(--navy); font-size: 13px; white-space: nowrap; }
+.admin-service-label { display: block; margin-top: 4px; color: var(--gold-2); font-size: 10px; font-weight: 700; line-height: 1.35; }
+.admin-service-description { display: block; max-width: 260px; overflow: hidden; color: var(--muted); font-size: 12px; line-height: 1.5; text-overflow: ellipsis; white-space: nowrap; }
+.admin-service-detail-image { width: 100%; max-height: 230px; display: block; margin: -4px 0 22px; border-radius: 10px; object-fit: cover; }
 .admin-empty-state { display: grid; justify-items: center; gap: 10px; padding: 48px 16px; color: var(--muted); text-align: center; }
 .admin-empty-state svg { color: var(--gold-2); }
 .admin-empty-state h3 { margin: 4px 0 0; color: var(--navy); font-size: 17px; }

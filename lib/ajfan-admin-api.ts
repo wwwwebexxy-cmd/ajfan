@@ -25,6 +25,22 @@ export type Customer = CustomerInput & {
   updated_at: string;
 };
 
+export type ServiceInput = {
+  name: string;
+  service_charge: string;
+  includes_government_fee: boolean;
+  government_fee: string;
+  description: string;
+  image: File | null;
+};
+
+export type Service = Omit<ServiceInput, "image"> & {
+  id: number;
+  image: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 export class AdminApiError extends Error {
   constructor(public readonly status: number, message: string) {
     super(message);
@@ -59,15 +75,16 @@ async function readError(response: Response) {
 }
 
 async function request<T>(path: string, credentials: Credentials, init?: RequestInit): Promise<T> {
+  const headers = new Headers(init?.headers);
+  const isMultipart = typeof FormData !== "undefined" && init?.body instanceof FormData;
+  headers.set("Accept", "application/json");
+  headers.set("Authorization", `Basic ${encodeBasicAuth(credentials)}`);
+  if (!isMultipart) headers.set("Content-Type", "application/json");
+
   const response = await fetch(`/api/backend${path}`, {
     ...init,
     cache: "no-store",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Basic ${encodeBasicAuth(credentials)}`,
-      ...init?.headers,
-    },
+    headers,
   });
 
   if (!response.ok) throw new AdminApiError(response.status, await readError(response));
@@ -101,4 +118,42 @@ export function updateCustomer(credentials: Credentials, customerId: number, cus
 
 export function deleteCustomer(credentials: Credentials, customerId: number) {
   return request<void>(`/customers/${customerId}/`, credentials, { method: "DELETE" });
+}
+
+function serviceFormData(service: ServiceInput) {
+  const formData = new FormData();
+  formData.append("name", service.name);
+  formData.append("service_charge", service.service_charge);
+  formData.append("includes_government_fee", String(service.includes_government_fee));
+  formData.append("government_fee", service.government_fee);
+  formData.append("description", service.description);
+  if (service.image) formData.append("image", service.image);
+  return formData;
+}
+
+export async function listServices(credentials: Credentials) {
+  const payload = await request<Service[] | { results: Service[] }>("/services/", credentials);
+  return Array.isArray(payload) ? payload : payload.results;
+}
+
+export function createService(credentials: Credentials, service: ServiceInput) {
+  return request<Service>("/services/", credentials, {
+    method: "POST",
+    body: serviceFormData(service),
+  });
+}
+
+export function getService(credentials: Credentials, serviceId: number) {
+  return request<Service>(`/services/${serviceId}/`, credentials);
+}
+
+export function updateService(credentials: Credentials, serviceId: number, service: ServiceInput) {
+  return request<Service>(`/services/${serviceId}/`, credentials, {
+    method: "PATCH",
+    body: serviceFormData(service),
+  });
+}
+
+export function deleteService(credentials: Credentials, serviceId: number) {
+  return request<void>(`/services/${serviceId}/`, credentials, { method: "DELETE" });
 }
