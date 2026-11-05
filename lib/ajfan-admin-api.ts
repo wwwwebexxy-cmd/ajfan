@@ -41,6 +41,62 @@ export type Service = Omit<ServiceInput, "image"> & {
   updated_at: string;
 };
 
+export type StaffMember = {
+  id: number;
+  email: string;
+  name: string;
+};
+
+export type SalesInvoiceItemInput = {
+  service: number | "";
+  description: string;
+  sub_fee: string;
+  service_fee: string;
+  quantity: string;
+  start_date: string;
+  expiry_date: string;
+};
+
+export type SalesInvoiceInput = {
+  invoice_date: string;
+  customer: number | "";
+  items: SalesInvoiceItemInput[];
+  discount_amount: string;
+  received_amount: string;
+  paid_by_staff: boolean;
+  staff: number | null | "";
+  notes: string;
+};
+
+export type SalesInvoiceItem = Omit<SalesInvoiceItemInput, "service" | "quantity"> & {
+  id: number;
+  service: number;
+  service_name: string;
+  quantity: number;
+  line_total: string;
+};
+
+export type SalesInvoice = {
+  id: number;
+  invoice_number: string;
+  invoice_date: string;
+  customer: number;
+  customer_name: string;
+  customer_email: string;
+  items: SalesInvoiceItem[];
+  subtotal: string;
+  discount_amount: string;
+  total_amount: string;
+  received_amount: string;
+  balance_amount: string;
+  paid_by_staff: boolean;
+  staff: number | null;
+  staff_name: string;
+  notes: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export class AdminApiError extends Error {
   constructor(public readonly status: number, message: string) {
     super(message);
@@ -156,4 +212,36 @@ export function updateService(credentials: Credentials, serviceId: number, servi
 
 export function deleteService(credentials: Credentials, serviceId: number) {
   return request<void>(`/services/${serviceId}/`, credentials, { method: "DELETE" });
+}
+
+export async function listStaff(credentials: Credentials) {
+  const payload = await request<StaffMember[] | { results: StaffMember[] }>("/sales-invoices/staff/", credentials);
+  return Array.isArray(payload) ? payload : payload.results;
+}
+
+export async function listSalesInvoices(credentials: Credentials) {
+  const payload = await request<SalesInvoice[] | { results: SalesInvoice[] }>("/sales-invoices/", credentials);
+  return Array.isArray(payload) ? payload : payload.results;
+}
+
+export function createSalesInvoice(credentials: Credentials, invoice: SalesInvoiceInput) {
+  return request<SalesInvoice>("/sales-invoices/", credentials, {
+    method: "POST",
+    body: JSON.stringify(invoice),
+  });
+}
+
+export function getSalesInvoice(credentials: Credentials, invoiceId: number) {
+  return request<SalesInvoice>(`/sales-invoices/${invoiceId}/`, credentials);
+}
+
+export function updateSalesInvoice(credentials: Credentials, invoiceId: number, invoice: SalesInvoiceInput) {
+  return request<SalesInvoice>(`/sales-invoices/${invoiceId}/`, credentials, {
+    method: "PATCH",
+    body: JSON.stringify(invoice),
+  });
+}
+
+export function deleteSalesInvoice(credentials: Credentials, invoiceId: number) {
+  return request<void>(`/sales-invoices/${invoiceId}/`, credentials, { method: "DELETE" });
 }

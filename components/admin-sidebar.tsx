@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { BriefcaseBusiness, LayoutDashboard, LogOut, Users, X } from "lucide-react";
+import { BriefcaseBusiness, FileText, LayoutDashboard, LogOut, Users, X } from "lucide-react";
 import { Brand } from "./brand";
 
-export type AdminView = "dashboard" | "customers" | "services";
+export type AdminView = "dashboard" | "customers" | "services" | "sales";
 
 type AdminSidebarProps = {
   activeView: AdminView;
@@ -18,6 +18,7 @@ const navigation: Array<{ id: AdminView; label: string; icon: typeof LayoutDashb
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { id: "customers", label: "Customers", icon: Users },
   { id: "services", label: "Services", icon: BriefcaseBusiness },
+  { id: "sales", label: "Sales Invoice", icon: FileText },
 ];
 
 export function AdminSidebar({ activeView, isOpen, onClose, onLogout, onNavigate }: AdminSidebarProps) {

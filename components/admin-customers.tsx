@@ -8,6 +8,7 @@ import { AdminCustomerDetails, AdminDeleteCustomer, CustomerActionIcons } from "
 import { AdminDashboard } from "./admin-dashboard";
 import { AdminSidebar, AdminView } from "./admin-sidebar";
 import { AdminServices } from "./admin-services";
+import { AdminSalesInvoices } from "./admin-sales-invoices";
 import { Brand } from "./brand";
 
 const emptyCustomer: CustomerInput = {
@@ -309,6 +310,8 @@ export function AdminCustomers() {
             <AdminDashboard customers={customers} onNewCustomer={openNewCustomer} onOpenCustomers={() => navigateTo("customers")} />
           ) : activeView === "services" ? (
             <AdminServices credentials={credentials} onLogout={handleLogout} />
+          ) : activeView === "sales" ? (
+            <AdminSalesInvoices credentials={credentials} onLogout={handleLogout} onAddCustomer={openNewCustomer} onAddService={() => navigateTo("services")} />
           ) : (
             <>
               <div className="admin-page-heading">
