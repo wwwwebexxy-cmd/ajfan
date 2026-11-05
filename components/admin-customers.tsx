@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, LogIn, Menu, Plus, RefreshCw, ShieldCheck, Users, X } from "lucide-react";
+import { ArrowLeft, CheckCircle2, LogIn, Menu, Plus, RefreshCw, Search, ShieldCheck, Users, X } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { AdminApiError, createCustomer, Credentials, CustomerInput, deleteCustomer, getCustomer, listCustomers, Customer } from "@/lib/ajfan-admin-api";
 import { AdminCustomerDetails, AdminDeleteCustomer, CustomerActionIcons } from "./admin-customer-dialogs";
@@ -57,6 +57,7 @@ export function AdminCustomers() {
   const [showForm, setShowForm] = useState(false);
   const [activeView, setActiveView] = useState<AdminView>("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<Customer | null>(null);
   const [detailBusy, setDetailBusy] = useState(false);
@@ -93,6 +94,7 @@ export function AdminCustomers() {
     setShowForm(false);
     setActiveView("dashboard");
     setSidebarOpen(false);
+    setSearchTerm("");
     setSelectedCustomer(null);
     setDeleteTarget(null);
     setError("");
@@ -184,6 +186,11 @@ export function AdminCustomers() {
       setBusy(false);
     }
   }
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredCustomers = normalizedSearch
+    ? customers.filter((customer) => [customer.name, customer.email, customer.phone].some((value) => value.toLowerCase().includes(normalizedSearch)))
+    : customers;
 
   if (!credentials) {
     return (
@@ -280,15 +287,26 @@ export function AdminCustomers() {
               <section className="admin-panel" aria-labelledby="customer-list-heading">
                 <div className="admin-panel-heading">
                   <div><p className="admin-kicker">Customer records</p><h2 id="customer-list-heading">Customer list</h2></div>
-                  <span className="admin-count"><Users size={15} /> {customers.length} {customers.length === 1 ? "customer" : "customers"}</span>
+                  <span className="admin-count"><Users size={15} /> {filteredCustomers.length}{normalizedSearch ? ` of ${customers.length}` : ""} {filteredCustomers.length === 1 ? "customer" : "customers"}</span>
+                </div>
+                <div className="admin-list-toolbar">
+                  <label className="admin-search-label" htmlFor="customer-search">Search customers</label>
+                  <div className="admin-search-control">
+                    <Search size={17} aria-hidden="true" />
+                    <input id="customer-search" className="admin-search-input" type="search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Name, email or phone" aria-describedby="customer-search-help" />
+                    {searchTerm && <button className="admin-search-clear" type="button" aria-label="Clear customer search" onClick={() => setSearchTerm("")}><X size={15} /></button>}
+                  </div>
+                  <span id="customer-search-help" className="admin-search-help">Search by customer name, email or phone number.</span>
                 </div>
                 {customers.length === 0 ? (
                   <div className="admin-empty-state"><Users size={28} /><h3>No customers yet</h3><p>Create the first customer record to see it here.</p><button className="admin-primary-button" type="button" onClick={openNewCustomer}><Plus size={17} /> New customer</button></div>
+                ) : filteredCustomers.length === 0 ? (
+                  <div className="admin-empty-state"><Search size={28} /><h3>No matching customers</h3><p>Try another name, email or phone number.</p><button className="admin-secondary-button" type="button" onClick={() => setSearchTerm("")}>Clear search</button></div>
                 ) : (
                   <div className="admin-table-wrap">
                     <table className="admin-table">
                       <thead><tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Phone</th><th scope="col">Added</th><th scope="col">Actions</th></tr></thead>
-                      <tbody>{customers.map((customer) => <tr key={customer.id}><th scope="row">{customer.name}</th><td>{customer.email}</td><td>{customer.phone}</td><td>{formatDate(customer.created_at)}</td><td><CustomerActionIcons customerName={customer.name} onView={() => viewCustomer(customer)} onDelete={() => { setDeleteTarget(customer); setSelectedCustomer(null); setError(""); }} /></td></tr>)}</tbody>
+                      <tbody>{filteredCustomers.map((customer) => <tr key={customer.id}><th scope="row">{customer.name}</th><td>{customer.email}</td><td>{customer.phone}</td><td>{formatDate(customer.created_at)}</td><td><CustomerActionIcons customerName={customer.name} onView={() => viewCustomer(customer)} onDelete={() => { setDeleteTarget(customer); setSelectedCustomer(null); setError(""); }} /></td></tr>)}</tbody>
                     </table>
                   </div>
                 )}

@@ -120,6 +120,15 @@ body {
 .admin-row-action-view:hover, .admin-row-action-view:focus-visible { border-color: var(--gold); background: #09977f1f; outline: none; }
 .admin-row-action-delete { color: #a84444; background: #fff1f1; }
 .admin-row-action-delete:hover, .admin-row-action-delete:focus-visible { border-color: #d68181; background: #ffe5e5; outline: none; }
+.admin-list-toolbar { display: grid; grid-template-columns: auto minmax(240px, 420px) 1fr; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.admin-search-label { color: var(--navy); font-size: 12px; font-weight: 700; }
+.admin-search-control { position: relative; min-width: 0; }
+.admin-search-control > svg { position: absolute; top: 50%; left: 13px; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.admin-search-input { width: 100%; min-height: 42px; padding: 10px 38px 10px 40px; border: 1px solid #1e255b2b; border-radius: 8px; color: var(--navy); background: #fff; font: inherit; font-size: 12px; outline: none; }
+.admin-search-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px #09977f1f; }
+.admin-search-clear { position: absolute; top: 50%; right: 9px; width: 26px; height: 26px; display: grid; place-items: center; transform: translateY(-50%); border: 0; border-radius: 6px; color: var(--muted); background: transparent; cursor: pointer; }
+.admin-search-clear:hover { color: var(--navy); background: #f4fbf9; }
+.admin-search-help { color: var(--muted); font-size: 11px; line-height: 1.5; }
 .admin-empty-state { display: grid; justify-items: center; gap: 10px; padding: 48px 16px; color: var(--muted); text-align: center; }
 .admin-empty-state svg { color: var(--gold-2); }
 .admin-empty-state h3 { margin: 4px 0 0; color: var(--navy); font-size: 17px; }
@@ -175,6 +184,8 @@ body {
   .admin-dashboard-actions { align-items: stretch; flex-direction: column; }
   .admin-dashboard-actions button { width: 100%; }
   .admin-recent-item time { display: none; }
+  .admin-list-toolbar { grid-template-columns: 1fr; align-items: stretch; gap: 7px; }
+  .admin-search-help { margin-top: 2px; }
   .admin-form-grid { grid-template-columns: 1fr; }
   .admin-field-wide { grid-column: auto; }
   .admin-table { min-width: 760px; }
