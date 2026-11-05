@@ -157,11 +157,11 @@ export function AdminCustomers() {
           <p className="admin-intro">Sign in with your admin email and password to manage customers.</p>
           <form className="admin-login-form" onSubmit={handleLogin}>
             <label htmlFor="admin-email">Email</label>
-            <input id="admin-email" name="email" type="email" autoComplete="username" required value={loginForm.email} onChange={(event) => setLoginForm((current) => ({ ...current, email: event.target.value }))} />
+            <input suppressHydrationWarning id="admin-email" name="email" type="email" autoComplete="username" required value={loginForm.email} onChange={(event) => setLoginForm((current) => ({ ...current, email: event.target.value }))} />
             <label htmlFor="admin-password">Password</label>
-            <input id="admin-password" name="password" type="password" autoComplete="current-password" required value={loginForm.password} onChange={(event) => setLoginForm((current) => ({ ...current, password: event.target.value }))} />
+            <input suppressHydrationWarning id="admin-password" name="password" type="password" autoComplete="current-password" required value={loginForm.password} onChange={(event) => setLoginForm((current) => ({ ...current, password: event.target.value }))} />
             {error && <p className="admin-error" role="alert">{error}</p>}
-            <button className="admin-primary-button" type="submit" disabled={busy}>
+            <button suppressHydrationWarning className="admin-primary-button" type="submit" disabled={busy}>
               <LogIn size={17} /> {busy ? "Signing in…" : "Sign in"}
             </button>
           </form>
