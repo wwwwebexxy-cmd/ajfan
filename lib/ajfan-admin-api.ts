@@ -14,6 +14,7 @@ export type CustomerInput = {
   account_holder_name: string;
   account_number: string;
   swift_address: string;
+  iban: string;
   trn: string;
   notes: string;
 };

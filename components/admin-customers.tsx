@@ -19,6 +19,7 @@ const emptyCustomer: CustomerInput = {
   account_holder_name: "",
   account_number: "",
   swift_address: "",
+  iban: "",
   trn: "",
   notes: "",
 };
@@ -34,6 +35,7 @@ const customerFields: Array<{ name: keyof CustomerInput; label: string; type?: s
   { name: "account_holder_name", label: "Account holder name" },
   { name: "account_number", label: "Account number" },
   { name: "swift_address", label: "SWIFT address" },
+  { name: "iban", label: "IBAN" },
   { name: "trn", label: "TRN" },
   { name: "notes", label: "Notes", wide: true },
 ];
