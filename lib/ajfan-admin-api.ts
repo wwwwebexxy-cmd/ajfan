@@ -92,6 +92,13 @@ export function getCustomer(credentials: Credentials, customerId: number) {
   return request<Customer>(`/customers/${customerId}/`, credentials);
 }
 
+export function updateCustomer(credentials: Credentials, customerId: number, customer: CustomerInput) {
+  return request<Customer>(`/customers/${customerId}/`, credentials, {
+    method: "PATCH",
+    body: JSON.stringify(customer),
+  });
+}
+
 export function deleteCustomer(credentials: Credentials, customerId: number) {
   return request<void>(`/customers/${customerId}/`, credentials, { method: "DELETE" });
 }

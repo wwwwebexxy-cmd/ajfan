@@ -118,6 +118,8 @@ body {
 .admin-row-action { width: 32px; height: 32px; display: inline-grid; place-items: center; border: 1px solid transparent; border-radius: 7px; background: transparent; cursor: pointer; }
 .admin-row-action-view { color: var(--gold-2); background: #09977f12; }
 .admin-row-action-view:hover, .admin-row-action-view:focus-visible { border-color: var(--gold); background: #09977f1f; outline: none; }
+.admin-row-action-edit { color: var(--navy); background: #1e255b0d; }
+.admin-row-action-edit:hover, .admin-row-action-edit:focus-visible { border-color: #1e255b40; background: #1e255b14; outline: none; }
 .admin-row-action-delete { color: #a84444; background: #fff1f1; }
 .admin-row-action-delete:hover, .admin-row-action-delete:focus-visible { border-color: #d68181; background: #ffe5e5; outline: none; }
 .admin-list-toolbar { display: grid; grid-template-columns: auto minmax(240px, 420px) 1fr; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }

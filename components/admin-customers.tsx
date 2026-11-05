@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, LogIn, Menu, Plus, RefreshCw, Search, ShieldCheck, Users, X } from "lucide-react";
 import { FormEvent, useState } from "react";
-import { AdminApiError, createCustomer, Credentials, CustomerInput, deleteCustomer, getCustomer, listCustomers, Customer } from "@/lib/ajfan-admin-api";
+import { AdminApiError, createCustomer, Credentials, CustomerInput, deleteCustomer, getCustomer, listCustomers, Customer, updateCustomer } from "@/lib/ajfan-admin-api";
 import { AdminCustomerDetails, AdminDeleteCustomer, CustomerActionIcons } from "./admin-customer-dialogs";
 import { AdminDashboard } from "./admin-dashboard";
 import { AdminSidebar, AdminView } from "./admin-sidebar";
@@ -49,6 +49,24 @@ function isAuthError(error: unknown): error is AdminApiError {
   return error instanceof AdminApiError && (error.status === 401 || error.status === 403);
 }
 
+function customerToForm(customer: Customer): CustomerInput {
+  return {
+    name: customer.name ?? "",
+    email: customer.email ?? "",
+    phone: customer.phone ?? "",
+    address_line_1: customer.address_line_1 ?? "",
+    address_line_2: customer.address_line_2 ?? "",
+    address_line_3: customer.address_line_3 ?? "",
+    bank_name: customer.bank_name ?? "",
+    account_holder_name: customer.account_holder_name ?? "",
+    account_number: customer.account_number ?? "",
+    swift_address: customer.swift_address ?? "",
+    iban: customer.iban ?? "",
+    trn: customer.trn ?? "",
+    notes: customer.notes ?? "",
+  };
+}
+
 export function AdminCustomers() {
   const [credentials, setCredentials] = useState<Credentials | null>(null);
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
@@ -60,7 +78,9 @@ export function AdminCustomers() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<Customer | null>(null);
+  const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
   const [detailBusy, setDetailBusy] = useState(false);
+  const [editBusy, setEditBusy] = useState(false);
   const [deleteBusy, setDeleteBusy] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -97,6 +117,8 @@ export function AdminCustomers() {
     setSearchTerm("");
     setSelectedCustomer(null);
     setDeleteTarget(null);
+    setEditingCustomer(null);
+    setEditBusy(false);
     setError("");
     setNotice("");
   }
@@ -106,15 +128,52 @@ export function AdminCustomers() {
     setSidebarOpen(false);
     setError("");
     setNotice("");
-    if (view === "dashboard") setShowForm(false);
+    if (view === "dashboard") {
+      setShowForm(false);
+      setEditingCustomer(null);
+    }
   }
 
   function openNewCustomer() {
     setActiveView("customers");
     setShowForm(true);
+    setEditingCustomer(null);
+    setCustomerForm(emptyCustomer);
+    setEditBusy(false);
     setSidebarOpen(false);
     setError("");
     setNotice("");
+  }
+
+  function closeCustomerForm() {
+    setShowForm(false);
+    setEditingCustomer(null);
+    setEditBusy(false);
+  }
+
+  async function editCustomer(customer: Customer) {
+    if (!credentials) return;
+    setActiveView("customers");
+    setShowForm(true);
+    setEditingCustomer(customer);
+    setCustomerForm(customerToForm(customer));
+    setEditBusy(true);
+    setError("");
+    setNotice("");
+
+    try {
+      const details = await getCustomer(credentials, customer.id);
+      setEditingCustomer(details);
+      setCustomerForm(customerToForm(details));
+    } catch (editError) {
+      if (isAuthError(editError)) handleLogout();
+      else {
+        setError("Could not load customer details for editing.");
+        closeCustomerForm();
+      }
+    } finally {
+      setEditBusy(false);
+    }
   }
 
   async function viewCustomer(customer: Customer) {
@@ -166,7 +225,7 @@ export function AdminCustomers() {
     }
   }
 
-  async function handleCreateCustomer(event: FormEvent<HTMLFormElement>) {
+  async function handleSaveCustomer(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!credentials) return;
     setBusy(true);
@@ -174,11 +233,16 @@ export function AdminCustomers() {
     setNotice("");
 
     try {
-      const createdCustomer = await createCustomer(credentials, customerForm);
+      const savedCustomer = editingCustomer
+        ? await updateCustomer(credentials, editingCustomer.id, customerForm)
+        : await createCustomer(credentials, customerForm);
       setCustomerForm(emptyCustomer);
       setShowForm(false);
-      setNotice("Customer saved successfully.");
-      setCustomers((currentCustomers) => [createdCustomer, ...currentCustomers]);
+      setEditingCustomer(null);
+      setNotice(editingCustomer ? "Customer updated successfully." : "Customer saved successfully.");
+      setCustomers((currentCustomers) => editingCustomer
+        ? currentCustomers.map((customer) => customer.id === savedCustomer.id ? savedCustomer : customer)
+        : [savedCustomer, ...currentCustomers]);
     } catch (createError) {
       if (isAuthError(createError)) handleLogout();
       else setError(createError instanceof AdminApiError ? createError.message : "Could not save the customer.");
@@ -259,10 +323,10 @@ export function AdminCustomers() {
               {showForm && (
                 <section className="admin-panel admin-form-panel" aria-labelledby="new-customer-heading">
                   <div className="admin-panel-heading">
-                    <div><p className="admin-kicker">Customer details</p><h2 id="new-customer-heading">New customer</h2></div>
-                    <button className="admin-icon-button" type="button" aria-label="Close new customer form" onClick={() => setShowForm(false)}><X size={19} /></button>
+                    <div><p className="admin-kicker">Customer details</p><h2 id="new-customer-heading">{editingCustomer ? "Edit customer" : "New customer"}</h2></div>
+                    <button className="admin-icon-button" type="button" aria-label="Close customer form" onClick={closeCustomerForm}><X size={19} /></button>
                   </div>
-                  <form className="admin-customer-form" onSubmit={handleCreateCustomer}>
+                  <form className="admin-customer-form" onSubmit={handleSaveCustomer} aria-busy={editBusy}>
                     <div className="admin-form-grid">
                       {customerFields.map((field) => (
                         <label key={field.name} className={field.wide ? "admin-field-wide" : ""} htmlFor={`customer-${field.name}`}>
@@ -277,8 +341,8 @@ export function AdminCustomers() {
                       ))}
                     </div>
                     <div className="admin-form-actions">
-                      <button className="admin-secondary-button" type="button" onClick={() => setShowForm(false)}>Cancel</button>
-                      <button className="admin-primary-button" type="submit" disabled={busy}><CheckCircle2 size={16} /> {busy ? "Saving…" : "Save customer"}</button>
+                      <button className="admin-secondary-button" type="button" onClick={closeCustomerForm}>Cancel</button>
+                      <button className="admin-primary-button" type="submit" disabled={busy || editBusy}><CheckCircle2 size={16} /> {editingCustomer ? "Save changes" : "Save customer"}</button>
                     </div>
                   </form>
                 </section>
@@ -306,7 +370,7 @@ export function AdminCustomers() {
                   <div className="admin-table-wrap">
                     <table className="admin-table">
                       <thead><tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Phone</th><th scope="col">Added</th><th scope="col">Actions</th></tr></thead>
-                      <tbody>{filteredCustomers.map((customer) => <tr key={customer.id}><th scope="row">{customer.name}</th><td>{customer.email}</td><td>{customer.phone}</td><td>{formatDate(customer.created_at)}</td><td><CustomerActionIcons customerName={customer.name} onView={() => viewCustomer(customer)} onDelete={() => { setDeleteTarget(customer); setSelectedCustomer(null); setError(""); }} /></td></tr>)}</tbody>
+                      <tbody>{filteredCustomers.map((customer) => <tr key={customer.id}><th scope="row">{customer.name}</th><td>{customer.email}</td><td>{customer.phone}</td><td>{formatDate(customer.created_at)}</td><td><CustomerActionIcons customerName={customer.name} onView={() => viewCustomer(customer)} onEdit={() => editCustomer(customer)} onDelete={() => { setDeleteTarget(customer); setSelectedCustomer(null); setError(""); }} /></td></tr>)}</tbody>
                     </table>
                   </div>
                 )}

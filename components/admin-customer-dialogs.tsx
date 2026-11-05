@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, Trash2, X } from "lucide-react";
+import { Eye, Pencil, Trash2, X } from "lucide-react";
 import type { Customer } from "@/lib/ajfan-admin-api";
 
 type CustomerDetailsProps = {
@@ -88,11 +88,14 @@ export function AdminDeleteCustomer({ customer, isDeleting, onCancel, onConfirm 
   );
 }
 
-export function CustomerActionIcons({ onView, onDelete, customerName }: { onView: () => void; onDelete: () => void; customerName: string }) {
+export function CustomerActionIcons({ onView, onEdit, onDelete, customerName }: { onView: () => void; onEdit: () => void; onDelete: () => void; customerName: string }) {
   return (
     <div className="admin-row-actions">
       <button className="admin-row-action admin-row-action-view" type="button" aria-label={`View ${customerName}`} onClick={onView}>
         <Eye size={16} />
+      </button>
+      <button className="admin-row-action admin-row-action-edit" type="button" aria-label={`Edit ${customerName}`} onClick={onEdit}>
+        <Pencil size={16} />
       </button>
       <button className="admin-row-action admin-row-action-delete" type="button" aria-label={`Delete ${customerName}`} onClick={onDelete}>
         <Trash2 size={16} />
