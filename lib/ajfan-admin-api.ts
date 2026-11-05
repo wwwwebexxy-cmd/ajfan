@@ -13,8 +13,8 @@ export type CustomerInput = {
   bank_name: string;
   account_holder_name: string;
   account_number: string;
-  zip_address: string;
-  ifsc: string;
+  swift_address: string;
+  trn: string;
   notes: string;
 };
 

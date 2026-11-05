@@ -18,8 +18,8 @@ const emptyCustomer: CustomerInput = {
   bank_name: "",
   account_holder_name: "",
   account_number: "",
-  zip_address: "",
-  ifsc: "",
+  swift_address: "",
+  trn: "",
   notes: "",
 };
 
@@ -33,8 +33,8 @@ const customerFields: Array<{ name: keyof CustomerInput; label: string; type?: s
   { name: "bank_name", label: "Bank name" },
   { name: "account_holder_name", label: "Account holder name" },
   { name: "account_number", label: "Account number" },
-  { name: "zip_address", label: "ZIP address" },
-  { name: "ifsc", label: "IFSC" },
+  { name: "swift_address", label: "SWIFT address" },
+  { name: "trn", label: "TRN" },
   { name: "notes", label: "Notes", wide: true },
 ];
 
@@ -129,11 +129,11 @@ export function AdminCustomers() {
     setNotice("");
 
     try {
-      await createCustomer(credentials, customerForm);
+      const createdCustomer = await createCustomer(credentials, customerForm);
       setCustomerForm(emptyCustomer);
       setShowForm(false);
       setNotice("Customer saved successfully.");
-      setCustomers(await listCustomers(credentials));
+      setCustomers((currentCustomers) => [createdCustomer, ...currentCustomers]);
     } catch (createError) {
       if (isAuthError(createError)) handleLogout();
       else setError(createError instanceof AdminApiError ? createError.message : "Could not save the customer.");
