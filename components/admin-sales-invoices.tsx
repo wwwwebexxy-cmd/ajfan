@@ -8,7 +8,6 @@ import {
   Credentials,
   Customer,
   deleteSalesInvoice,
-  generateSalesInvoiceNumber,
   listCustomers,
   listSalesInvoices,
   listServices,
@@ -99,8 +98,6 @@ export function AdminSalesInvoices({ credentials, onLogout, onAddCustomer, onAdd
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
-  const [numberBusy, setNumberBusy] = useState(false);
-  const [reservationToken, setReservationToken] = useState("");
   const [deleteBusy, setDeleteBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -131,31 +128,18 @@ export function AdminSalesInvoices({ credentials, onLogout, onAddCustomer, onAdd
     void refreshData();
   }, [credentials]);
 
-  async function openNewInvoice() {
+  function openNewInvoice() {
     setEditingInvoice(null);
-    setInvoiceForm({ ...emptyInvoice(), invoice_date: localDate(), invoice_number: "Generating…" });
-    setReservationToken("");
+    setInvoiceForm({ ...emptyInvoice(), invoice_date: localDate() });
     setShowForm(true);
     setSelectedInvoice(null);
     setError("");
     setNotice("");
-    setNumberBusy(true);
-    try {
-      const generatedNumber = await generateSalesInvoiceNumber(credentials);
-      setReservationToken(generatedNumber.reservation_token);
-      setInvoiceForm((current) => ({ ...current, invoice_number: generatedNumber.invoice_number }));
-    } catch (generationError) {
-      if (isAuthError(generationError)) onLogout();
-      else setError(generationError instanceof AdminApiError ? generationError.message : "Could not generate the invoice number.");
-    } finally {
-      setNumberBusy(false);
-    }
   }
 
   function openEditInvoice(invoice: SalesInvoice) {
     setEditingInvoice(invoice);
     setInvoiceForm(invoiceToForm(invoice));
-    setReservationToken("");
     setShowForm(true);
     setSelectedInvoice(null);
     setError("");
@@ -166,7 +150,6 @@ export function AdminSalesInvoices({ credentials, onLogout, onAddCustomer, onAdd
     setShowForm(false);
     setEditingInvoice(null);
     setInvoiceForm(emptyInvoice());
-    setReservationToken("");
   }
 
   function updateLine(index: number, changes: Partial<InvoiceLineForm>) {
@@ -201,10 +184,6 @@ export function AdminSalesInvoices({ credentials, onLogout, onAddCustomer, onAdd
 
   async function saveInvoice(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!editingInvoice && !reservationToken) {
-      setError("Wait for the backend to generate the invoice number before saving.");
-      return;
-    }
     if (!invoiceForm.customer || invoiceForm.items.some((item) => !item.service)) {
       setError("Select a customer and a service for every invoice line.");
       return;
@@ -221,7 +200,6 @@ export function AdminSalesInvoices({ credentials, onLogout, onAddCustomer, onAdd
       paid_by_staff: invoiceForm.paid_by_staff,
       staff: invoiceForm.paid_by_staff && invoiceForm.staff ? Number(invoiceForm.staff) : null,
       notes: invoiceForm.notes,
-      ...(reservationToken ? { reservation_token: reservationToken } : {}),
     };
 
     try {
@@ -279,12 +257,12 @@ export function AdminSalesInvoices({ credentials, onLogout, onAddCustomer, onAdd
       {showForm && (
         <section className="admin-panel" aria-labelledby="new-sales-invoice-heading">
           <div className="admin-panel-heading">
-            <div><p className="admin-kicker">Invoice details</p><h2 id="new-sales-invoice-heading">{editingInvoice ? `Edit invoice #${editingInvoice.invoice_number}` : "New sales invoice"}</h2><p className="admin-form-help">The backend generates and reserves the invoice number when you open this form.</p></div>
+            <div><p className="admin-kicker">Invoice details</p><h2 id="new-sales-invoice-heading">{editingInvoice ? `Edit invoice #${editingInvoice.invoice_number}` : "New sales invoice"}</h2><p className="admin-form-help">The backend generates the invoice number only after the invoice is created successfully.</p></div>
             <button className="admin-icon-button" type="button" aria-label="Close invoice form" onClick={closeForm}><X size={19} /></button>
           </div>
           <form className="admin-customer-form" onSubmit={saveInvoice}>
             <div className="admin-form-grid">
-              <div className="admin-field-block"><span className="admin-field-label">Invoice number</span><div className="admin-readonly-field">{editingInvoice?.invoice_number || invoiceForm.invoice_number || "Generating…"}</div></div>
+              <div className="admin-field-block"><span className="admin-field-label">Invoice number</span><div className="admin-readonly-field">{editingInvoice?.invoice_number || "Generated after save"}</div></div>
               <label htmlFor="sales-invoice-date">Invoice date *<input id="sales-invoice-date" type="date" required value={invoiceForm.invoice_date} onChange={(event) => setInvoiceForm((current) => ({ ...current, invoice_date: event.target.value }))} /></label>
               <div className="admin-field-block admin-field-wide"><span className="admin-field-label">Customer *</span><div className="admin-invoice-inline-control"><select id="sales-invoice-customer" required value={invoiceForm.customer} onChange={(event) => setInvoiceForm((current) => ({ ...current, customer: event.target.value ? Number(event.target.value) : "" }))}><option value="">Select customer</option>{customers.map((customer) => <option key={customer.id} value={customer.id}>{customer.name} · {customer.email}</option>)}</select><button className="admin-secondary-button" type="button" onClick={onAddCustomer}><Plus size={15} /> Add customer</button></div></div>
             </div>
@@ -320,7 +298,7 @@ export function AdminSalesInvoices({ credentials, onLogout, onAddCustomer, onAdd
                 <label htmlFor="sales-invoice-notes">Notes<textarea id="sales-invoice-notes" rows={5} value={invoiceForm.notes} onChange={(event) => setInvoiceForm((current) => ({ ...current, notes: event.target.value }))} /></label>
               </div>
             </div>
-            <div className="admin-form-actions"><button className="admin-secondary-button" type="button" onClick={closeForm}>Cancel</button><button className="admin-primary-button" type="submit" disabled={busy || numberBusy || (!editingInvoice && !reservationToken)}><CheckCircle2 size={16} /> {numberBusy ? "Generating number…" : busy ? "Saving…" : editingInvoice ? "Save changes" : "Create invoice"}</button></div>
+            <div className="admin-form-actions"><button className="admin-secondary-button" type="button" onClick={closeForm}>Cancel</button><button className="admin-primary-button" type="submit" disabled={busy}><CheckCircle2 size={16} /> {busy ? "Saving…" : editingInvoice ? "Save changes" : "Create invoice"}</button></div>
           </form>
         </section>
       )}

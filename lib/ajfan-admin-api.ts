@@ -66,12 +66,6 @@ export type SalesInvoiceInput = {
   paid_by_staff: boolean;
   staff: number | null | "";
   notes: string;
-  reservation_token?: string;
-};
-
-export type GeneratedInvoiceNumber = {
-  invoice_number: string;
-  reservation_token: string;
 };
 
 export type SalesInvoiceItem = Omit<SalesInvoiceItemInput, "service" | "quantity"> & {
@@ -228,13 +222,6 @@ export async function listStaff(credentials: Credentials) {
 export async function listSalesInvoices(credentials: Credentials) {
   const payload = await request<SalesInvoice[] | { results: SalesInvoice[] }>("/sales-invoices/", credentials);
   return Array.isArray(payload) ? payload : payload.results;
-}
-
-export function generateSalesInvoiceNumber(credentials: Credentials) {
-  return request<GeneratedInvoiceNumber>("/sales-invoices/generate-number/", credentials, {
-    method: "POST",
-    body: JSON.stringify({}),
-  });
 }
 
 export function createSalesInvoice(credentials: Credentials, invoice: SalesInvoiceInput) {
