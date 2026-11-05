@@ -39,4 +39,5 @@ async function proxyRequest(request: NextRequest, context: RouteContext) {
 
 export const GET = proxyRequest;
 export const POST = proxyRequest;
+export const PATCH = proxyRequest;
 export const DELETE = proxyRequest;
