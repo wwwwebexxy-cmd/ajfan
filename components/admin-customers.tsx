@@ -221,9 +221,9 @@ export function AdminCustomers() {
                           {field.label}
                           {field.name === "name" || field.name === "email" || field.name === "phone" ? <span aria-hidden="true"> *</span> : null}
                           {field.name === "notes" ? (
-                            <textarea id={`customer-${field.name}`} name={field.name} rows={4} value={customerForm[field.name]} onChange={(event) => setCustomerForm((current) => ({ ...current, [field.name]: event.target.value }))} />
+                            <textarea id={`customer-${field.name}`} name={field.name} rows={4} value={customerForm[field.name] ?? ""} onChange={(event) => setCustomerForm((current) => ({ ...current, [field.name]: event.target.value }))} />
                           ) : (
-                            <input id={`customer-${field.name}`} name={field.name} type={field.type || "text"} required={field.name === "name" || field.name === "email" || field.name === "phone"} value={customerForm[field.name]} onChange={(event) => setCustomerForm((current) => ({ ...current, [field.name]: event.target.value }))} />
+                            <input id={`customer-${field.name}`} name={field.name} type={field.type || "text"} required={field.name === "name" || field.name === "email" || field.name === "phone"} value={customerForm[field.name] ?? ""} onChange={(event) => setCustomerForm((current) => ({ ...current, [field.name]: event.target.value }))} />
                           )}
                         </label>
                       ))}
