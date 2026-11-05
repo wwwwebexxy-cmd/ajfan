@@ -72,6 +72,7 @@ async function request<T>(path: string, credentials: Credentials, init?: Request
 
   if (!response.ok) throw new AdminApiError(response.status, await readError(response));
 
+  if (response.status === 204) return undefined as T;
   return response.json() as Promise<T>;
 }
 
@@ -85,4 +86,12 @@ export function createCustomer(credentials: Credentials, customer: CustomerInput
     method: "POST",
     body: JSON.stringify(customer),
   });
+}
+
+export function getCustomer(credentials: Credentials, customerId: number) {
+  return request<Customer>(`/customers/${customerId}/`, credentials);
+}
+
+export function deleteCustomer(credentials: Credentials, customerId: number) {
+  return request<void>(`/customers/${customerId}/`, credentials, { method: "DELETE" });
 }

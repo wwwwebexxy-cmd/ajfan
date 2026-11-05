@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, LogIn, Menu, Plus, RefreshCw, ShieldCheck, Users, X } from "lucide-react";
 import { FormEvent, useState } from "react";
-import { AdminApiError, createCustomer, Credentials, CustomerInput, listCustomers, Customer } from "@/lib/ajfan-admin-api";
+import { AdminApiError, createCustomer, Credentials, CustomerInput, deleteCustomer, getCustomer, listCustomers, Customer } from "@/lib/ajfan-admin-api";
+import { AdminCustomerDetails, AdminDeleteCustomer, CustomerActionIcons } from "./admin-customer-dialogs";
 import { AdminDashboard } from "./admin-dashboard";
 import { AdminSidebar, AdminView } from "./admin-sidebar";
 import { Brand } from "./brand";
@@ -56,6 +57,10 @@ export function AdminCustomers() {
   const [showForm, setShowForm] = useState(false);
   const [activeView, setActiveView] = useState<AdminView>("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<Customer | null>(null);
+  const [detailBusy, setDetailBusy] = useState(false);
+  const [deleteBusy, setDeleteBusy] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -88,6 +93,8 @@ export function AdminCustomers() {
     setShowForm(false);
     setActiveView("dashboard");
     setSidebarOpen(false);
+    setSelectedCustomer(null);
+    setDeleteTarget(null);
     setError("");
     setNotice("");
   }
@@ -106,6 +113,40 @@ export function AdminCustomers() {
     setSidebarOpen(false);
     setError("");
     setNotice("");
+  }
+
+  async function viewCustomer(customer: Customer) {
+    if (!credentials) return;
+    setSelectedCustomer(customer);
+    setDetailBusy(true);
+    setError("");
+
+    try {
+      setSelectedCustomer(await getCustomer(credentials, customer.id));
+    } catch (detailError) {
+      if (isAuthError(detailError)) handleLogout();
+      else setError("Could not load customer details.");
+    } finally {
+      setDetailBusy(false);
+    }
+  }
+
+  async function confirmDeleteCustomer() {
+    if (!credentials || !deleteTarget) return;
+    setDeleteBusy(true);
+    setError("");
+
+    try {
+      await deleteCustomer(credentials, deleteTarget.id);
+      setCustomers((currentCustomers) => currentCustomers.filter((customer) => customer.id !== deleteTarget.id));
+      setDeleteTarget(null);
+      setNotice("Customer deleted successfully.");
+    } catch (deleteError) {
+      if (isAuthError(deleteError)) handleLogout();
+      else setError("Could not delete the customer.");
+    } finally {
+      setDeleteBusy(false);
+    }
   }
 
   async function refreshCustomers() {
@@ -246,8 +287,8 @@ export function AdminCustomers() {
                 ) : (
                   <div className="admin-table-wrap">
                     <table className="admin-table">
-                      <thead><tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Phone</th><th scope="col">Added</th></tr></thead>
-                      <tbody>{customers.map((customer) => <tr key={customer.id}><th scope="row">{customer.name}</th><td>{customer.email}</td><td>{customer.phone}</td><td>{formatDate(customer.created_at)}</td></tr>)}</tbody>
+                      <thead><tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Phone</th><th scope="col">Added</th><th scope="col">Actions</th></tr></thead>
+                      <tbody>{customers.map((customer) => <tr key={customer.id}><th scope="row">{customer.name}</th><td>{customer.email}</td><td>{customer.phone}</td><td>{formatDate(customer.created_at)}</td><td><CustomerActionIcons customerName={customer.name} onView={() => viewCustomer(customer)} onDelete={() => { setDeleteTarget(customer); setSelectedCustomer(null); setError(""); }} /></td></tr>)}</tbody>
                     </table>
                   </div>
                 )}
@@ -256,6 +297,8 @@ export function AdminCustomers() {
           )}
         </div>
       </div>
+      {selectedCustomer && <AdminCustomerDetails customer={selectedCustomer} isLoading={detailBusy} onClose={() => setSelectedCustomer(null)} />}
+      {deleteTarget && <AdminDeleteCustomer customer={deleteTarget} isDeleting={deleteBusy} onCancel={() => setDeleteTarget(null)} onConfirm={confirmDeleteCustomer} />}
     </main>
   );
 }
