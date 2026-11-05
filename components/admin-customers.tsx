@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, LogIn, LogOut, Plus, RefreshCw, ShieldCheck, Users, X } from "lucide-react";
+import { ArrowLeft, CheckCircle2, LogIn, Menu, Plus, RefreshCw, ShieldCheck, Users, X } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { AdminApiError, createCustomer, Credentials, CustomerInput, listCustomers, Customer } from "@/lib/ajfan-admin-api";
+import { AdminDashboard } from "./admin-dashboard";
+import { AdminSidebar, AdminView } from "./admin-sidebar";
 import { Brand } from "./brand";
 
 const emptyCustomer: CustomerInput = {
@@ -50,6 +52,8 @@ export function AdminCustomers() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [customerForm, setCustomerForm] = useState<CustomerInput>(emptyCustomer);
   const [showForm, setShowForm] = useState(false);
+  const [activeView, setActiveView] = useState<AdminView>("dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -66,6 +70,7 @@ export function AdminCustomers() {
       const records = await listCustomers(nextCredentials);
       setCredentials(nextCredentials);
       setCustomers(records);
+      setActiveView("dashboard");
       setLoginForm({ email: "", password: "" });
     } catch (loginError) {
       setError(isAuthError(loginError) ? "Invalid admin email or password." : "Unable to connect to the AJFAN backend.");
@@ -79,6 +84,24 @@ export function AdminCustomers() {
     setCustomers([]);
     setCustomerForm(emptyCustomer);
     setShowForm(false);
+    setActiveView("dashboard");
+    setSidebarOpen(false);
+    setError("");
+    setNotice("");
+  }
+
+  function navigateTo(view: AdminView) {
+    setActiveView(view);
+    setSidebarOpen(false);
+    setError("");
+    setNotice("");
+    if (view === "dashboard") setShowForm(false);
+  }
+
+  function openNewCustomer() {
+    setActiveView("customers");
+    setShowForm(true);
+    setSidebarOpen(false);
     setError("");
     setNotice("");
   }
@@ -148,75 +171,88 @@ export function AdminCustomers() {
 
   return (
     <main className="admin-shell">
-      <header className="admin-header">
-        <div className="admin-header-inner">
+      <AdminSidebar
+        activeView={activeView}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        onLogout={handleLogout}
+        onNavigate={navigateTo}
+      />
+      <div className="admin-workspace">
+        <header className="admin-mobile-header">
+          <button className="admin-mobile-menu-button" type="button" aria-label="Open navigation" onClick={() => setSidebarOpen(true)}>
+            <Menu size={20} />
+          </button>
           <Link href="/" aria-label="Back to AJFAN home"><Brand /></Link>
-          <div className="admin-header-actions">
-            <Link className="admin-text-link" href="/"><ArrowLeft size={15} /> Back to home</Link>
-            <button className="admin-logout-button" type="button" onClick={handleLogout}><LogOut size={15} /> Log out</button>
-          </div>
-        </div>
-      </header>
-      <div className="admin-content">
-        <div className="admin-page-heading">
-          <div>
-            <p className="admin-kicker">Admin workspace</p>
-            <h1>Customers</h1>
-            <p>Save and review customer records securely.</p>
-          </div>
-          <div className="admin-heading-actions">
-            <button className="admin-secondary-button" type="button" onClick={refreshCustomers} disabled={busy}><RefreshCw size={16} /> Refresh</button>
-            <button className="admin-primary-button" type="button" onClick={() => { setShowForm(true); setNotice(""); setError(""); }}><Plus size={17} /> New customer</button>
-          </div>
-        </div>
+          <button className="admin-mobile-home-button" type="button" onClick={handleLogout}>Log out</button>
+        </header>
+        <div className="admin-content">
+          {notice && <p className="admin-notice" role="status"><CheckCircle2 size={17} /> {notice}</p>}
+          {error && <p className="admin-error admin-page-error" role="alert">{error}</p>}
 
-        {notice && <p className="admin-notice" role="status"><CheckCircle2 size={17} /> {notice}</p>}
-        {error && <p className="admin-error admin-page-error" role="alert">{error}</p>}
-
-        {showForm && (
-          <section className="admin-panel admin-form-panel" aria-labelledby="new-customer-heading">
-            <div className="admin-panel-heading">
-              <div><p className="admin-kicker">Customer details</p><h2 id="new-customer-heading">New customer</h2></div>
-              <button className="admin-icon-button" type="button" aria-label="Close new customer form" onClick={() => setShowForm(false)}><X size={19} /></button>
-            </div>
-            <form className="admin-customer-form" onSubmit={handleCreateCustomer}>
-              <div className="admin-form-grid">
-                {customerFields.map((field) => (
-                  <label key={field.name} className={field.wide ? "admin-field-wide" : ""} htmlFor={`customer-${field.name}`}>
-                    {field.label}
-                    {field.name === "name" || field.name === "email" || field.name === "phone" ? <span aria-hidden="true"> *</span> : null}
-                    {field.name === "notes" ? (
-                      <textarea id={`customer-${field.name}`} name={field.name} rows={4} value={customerForm[field.name]} onChange={(event) => setCustomerForm((current) => ({ ...current, [field.name]: event.target.value }))} />
-                    ) : (
-                      <input id={`customer-${field.name}`} name={field.name} type={field.type || "text"} required={field.name === "name" || field.name === "email" || field.name === "phone"} value={customerForm[field.name]} onChange={(event) => setCustomerForm((current) => ({ ...current, [field.name]: event.target.value }))} />
-                    )}
-                  </label>
-                ))}
-              </div>
-              <div className="admin-form-actions">
-                <button className="admin-secondary-button" type="button" onClick={() => setShowForm(false)}>Cancel</button>
-                <button className="admin-primary-button" type="submit" disabled={busy}><CheckCircle2 size={16} /> {busy ? "Saving…" : "Save customer"}</button>
-              </div>
-            </form>
-          </section>
-        )}
-
-        <section className="admin-panel" aria-labelledby="customer-list-heading">
-          <div className="admin-panel-heading">
-            <div><p className="admin-kicker">Customer records</p><h2 id="customer-list-heading">Customer list</h2></div>
-            <span className="admin-count"><Users size={15} /> {customers.length} {customers.length === 1 ? "customer" : "customers"}</span>
-          </div>
-          {customers.length === 0 ? (
-            <div className="admin-empty-state"><Users size={28} /><h3>No customers yet</h3><p>Create the first customer record to see it here.</p><button className="admin-primary-button" type="button" onClick={() => setShowForm(true)}><Plus size={17} /> New customer</button></div>
+          {activeView === "dashboard" ? (
+            <AdminDashboard customers={customers} onNewCustomer={openNewCustomer} onOpenCustomers={() => navigateTo("customers")} />
           ) : (
-            <div className="admin-table-wrap">
-              <table className="admin-table">
-                <thead><tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Phone</th><th scope="col">Added</th></tr></thead>
-                <tbody>{customers.map((customer) => <tr key={customer.id}><th scope="row">{customer.name}</th><td>{customer.email}</td><td>{customer.phone}</td><td>{formatDate(customer.created_at)}</td></tr>)}</tbody>
-              </table>
-            </div>
+            <>
+              <div className="admin-page-heading">
+                <div>
+                  <p className="admin-kicker">Admin workspace</p>
+                  <h1>Customers</h1>
+                  <p>Save and review customer records securely.</p>
+                </div>
+                <div className="admin-heading-actions">
+                  <button className="admin-secondary-button" type="button" onClick={refreshCustomers} disabled={busy}><RefreshCw size={16} /> Refresh</button>
+                  <button className="admin-primary-button" type="button" onClick={openNewCustomer}><Plus size={17} /> New customer</button>
+                </div>
+              </div>
+
+              {showForm && (
+                <section className="admin-panel admin-form-panel" aria-labelledby="new-customer-heading">
+                  <div className="admin-panel-heading">
+                    <div><p className="admin-kicker">Customer details</p><h2 id="new-customer-heading">New customer</h2></div>
+                    <button className="admin-icon-button" type="button" aria-label="Close new customer form" onClick={() => setShowForm(false)}><X size={19} /></button>
+                  </div>
+                  <form className="admin-customer-form" onSubmit={handleCreateCustomer}>
+                    <div className="admin-form-grid">
+                      {customerFields.map((field) => (
+                        <label key={field.name} className={field.wide ? "admin-field-wide" : ""} htmlFor={`customer-${field.name}`}>
+                          {field.label}
+                          {field.name === "name" || field.name === "email" || field.name === "phone" ? <span aria-hidden="true"> *</span> : null}
+                          {field.name === "notes" ? (
+                            <textarea id={`customer-${field.name}`} name={field.name} rows={4} value={customerForm[field.name]} onChange={(event) => setCustomerForm((current) => ({ ...current, [field.name]: event.target.value }))} />
+                          ) : (
+                            <input id={`customer-${field.name}`} name={field.name} type={field.type || "text"} required={field.name === "name" || field.name === "email" || field.name === "phone"} value={customerForm[field.name]} onChange={(event) => setCustomerForm((current) => ({ ...current, [field.name]: event.target.value }))} />
+                          )}
+                        </label>
+                      ))}
+                    </div>
+                    <div className="admin-form-actions">
+                      <button className="admin-secondary-button" type="button" onClick={() => setShowForm(false)}>Cancel</button>
+                      <button className="admin-primary-button" type="submit" disabled={busy}><CheckCircle2 size={16} /> {busy ? "Saving…" : "Save customer"}</button>
+                    </div>
+                  </form>
+                </section>
+              )}
+
+              <section className="admin-panel" aria-labelledby="customer-list-heading">
+                <div className="admin-panel-heading">
+                  <div><p className="admin-kicker">Customer records</p><h2 id="customer-list-heading">Customer list</h2></div>
+                  <span className="admin-count"><Users size={15} /> {customers.length} {customers.length === 1 ? "customer" : "customers"}</span>
+                </div>
+                {customers.length === 0 ? (
+                  <div className="admin-empty-state"><Users size={28} /><h3>No customers yet</h3><p>Create the first customer record to see it here.</p><button className="admin-primary-button" type="button" onClick={openNewCustomer}><Plus size={17} /> New customer</button></div>
+                ) : (
+                  <div className="admin-table-wrap">
+                    <table className="admin-table">
+                      <thead><tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Phone</th><th scope="col">Added</th></tr></thead>
+                      <tbody>{customers.map((customer) => <tr key={customer.id}><th scope="row">{customer.name}</th><td>{customer.email}</td><td>{customer.phone}</td><td>{formatDate(customer.created_at)}</td></tr>)}</tbody>
+                    </table>
+                  </div>
+                )}
+              </section>
+            </>
           )}
-        </section>
+        </div>
       </div>
     </main>
   );
