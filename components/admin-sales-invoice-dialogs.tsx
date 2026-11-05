@@ -12,6 +12,10 @@ function formatDate(value: string) {
   return new Intl.DateTimeFormat("en-AE", { dateStyle: "medium" }).format(new Date(`${value.slice(0, 10)}T00:00:00`));
 }
 
+function paymentModeLabel(value: SalesInvoice["payment_mode"]) {
+  return value === "bank" ? "Bank" : value === "card" ? "Card" : "Cash";
+}
+
 export function SalesInvoiceDetailsDialog({ invoice, onClose }: { invoice: SalesInvoice; onClose: () => void }) {
   return (
     <div className="admin-modal-layer">
@@ -29,6 +33,7 @@ export function SalesInvoiceDetailsDialog({ invoice, onClose }: { invoice: Sales
           <div className="admin-detail-field"><span>Customer</span><strong>{invoice.customer_name}</strong></div>
           <div className="admin-detail-field"><span>Email</span><strong>{invoice.customer_email}</strong></div>
           <div className="admin-detail-field"><span>Invoice date</span><strong>{formatDate(invoice.invoice_date)}</strong></div>
+          <div className="admin-detail-field"><span>Payment mode</span><strong>{paymentModeLabel(invoice.payment_mode)}</strong></div>
           <div className="admin-detail-field"><span>Paid by staff</span><strong>{invoice.paid_by_staff ? invoice.staff_name || "Staff" : "No"}</strong></div>
         </div>
 

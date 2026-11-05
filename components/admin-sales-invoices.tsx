@@ -14,6 +14,7 @@ import {
   listStaff,
   SalesInvoice,
   SalesInvoiceInput,
+  PaymentMode,
   Service,
   StaffMember,
   updateSalesInvoice,
@@ -37,7 +38,7 @@ function emptyLine(): InvoiceLineForm {
 }
 
 function emptyInvoice(): InvoiceForm {
-  return { invoice_date: "", customer: "", items: [emptyLine()], discount_amount: "0", received_amount: "0", paid_by_staff: false, staff: "", notes: "" };
+  return { invoice_date: "", customer: "", items: [emptyLine()], discount_amount: "0", received_amount: "0", payment_mode: "cash", paid_by_staff: false, staff: "", notes: "" };
 }
 
 function localDate() {
@@ -75,6 +76,7 @@ function invoiceToForm(invoice: SalesInvoice): InvoiceForm {
     })),
     discount_amount: invoice.discount_amount ?? "0",
     received_amount: invoice.received_amount ?? "0",
+    payment_mode: invoice.payment_mode ?? "cash",
     paid_by_staff: invoice.paid_by_staff,
     staff: invoice.staff ?? "",
     notes: invoice.notes ?? "",
@@ -197,6 +199,7 @@ export function AdminSalesInvoices({ credentials, onLogout, onAddCustomer, onAdd
       items: invoiceForm.items.map((item) => ({ ...item, service: Number(item.service), quantity: String(Math.max(1, Number(item.quantity) || 1)) })),
       discount_amount: invoiceForm.discount_amount || "0",
       received_amount: invoiceForm.received_amount || "0",
+      payment_mode: invoiceForm.payment_mode,
       paid_by_staff: invoiceForm.paid_by_staff,
       staff: invoiceForm.paid_by_staff && invoiceForm.staff ? Number(invoiceForm.staff) : null,
       notes: invoiceForm.notes,
@@ -293,6 +296,17 @@ export function AdminSalesInvoices({ credentials, onLogout, onAddCustomer, onAdd
               </div>
               <div className="admin-invoice-summary-card">
                 <p className="admin-kicker">Payment details</p>
+                <fieldset className="admin-payment-mode-field">
+                  <legend>Payment mode <span aria-hidden="true">*</span></legend>
+                  <div className="admin-payment-options" role="radiogroup" aria-label="Payment mode">
+                    {(["cash", "bank", "card"] as PaymentMode[]).map((mode) => (
+                      <label className={`admin-payment-option${invoiceForm.payment_mode === mode ? " is-selected" : ""}`} key={mode}>
+                        <input type="radio" name="payment-mode" value={mode} checked={invoiceForm.payment_mode === mode} onChange={() => setInvoiceForm((current) => ({ ...current, payment_mode: mode }))} />
+                        <span>{mode === "cash" ? "Cash" : mode === "bank" ? "Bank" : "Card"}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
                 <label className="admin-checkbox-field" htmlFor="sales-invoice-paid-by-staff"><input id="sales-invoice-paid-by-staff" type="checkbox" checked={invoiceForm.paid_by_staff} onChange={(event) => setInvoiceForm((current) => ({ ...current, paid_by_staff: event.target.checked, staff: event.target.checked ? current.staff : "" }))} /><span>Paid by staff</span></label>
                 <label htmlFor="sales-invoice-staff">Staff member<select id="sales-invoice-staff" required={invoiceForm.paid_by_staff} disabled={!invoiceForm.paid_by_staff} value={invoiceForm.staff ?? ""} onChange={(event) => setInvoiceForm((current) => ({ ...current, staff: event.target.value ? Number(event.target.value) : "" }))}><option value="">Select staff</option>{staff.map((member) => <option key={member.id} value={member.id}>{member.name} · {member.email}</option>)}</select></label>
                 <label htmlFor="sales-invoice-notes">Notes<textarea id="sales-invoice-notes" rows={5} value={invoiceForm.notes} onChange={(event) => setInvoiceForm((current) => ({ ...current, notes: event.target.value }))} /></label>

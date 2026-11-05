@@ -57,12 +57,15 @@ export type SalesInvoiceItemInput = {
   expiry_date: string;
 };
 
+export type PaymentMode = "cash" | "bank" | "card";
+
 export type SalesInvoiceInput = {
   invoice_date: string;
   customer: number | "";
   items: SalesInvoiceItemInput[];
   discount_amount: string;
   received_amount: string;
+  payment_mode: PaymentMode;
   paid_by_staff: boolean;
   staff: number | null | "";
   notes: string;
@@ -89,6 +92,7 @@ export type SalesInvoice = {
   total_amount: string;
   received_amount: string;
   balance_amount: string;
+  payment_mode: PaymentMode;
   paid_by_staff: boolean;
   staff: number | null;
   staff_name: string;
