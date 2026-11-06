@@ -311,7 +311,7 @@ export function AdminCustomers() {
           {error && <p className="admin-error admin-page-error" role="alert">{error}</p>}
 
           {activeView === "dashboard" ? (
-            <AdminDashboard customers={customers} onNewCustomer={openNewCustomer} onOpenCustomers={() => navigateTo("customers")} />
+            <AdminDashboard credentials={credentials} customers={customers} onLogout={handleLogout} onNewCustomer={openNewCustomer} onOpenCustomers={() => navigateTo("customers")} onOpenView={navigateTo} />
           ) : activeView === "services" ? (
             <AdminServices credentials={credentials} onLogout={handleLogout} />
           ) : activeView === "sales" ? (

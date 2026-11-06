@@ -113,6 +113,34 @@ body {
 .admin-chart-line { fill: none; stroke: var(--gold-2); stroke-linecap: round; stroke-linejoin: round; stroke-width: 3; }
 .admin-chart-point { fill: #fff; stroke: var(--gold-2); stroke-width: 3; }
 .admin-chart-empty { margin: -2px 0 0; color: var(--muted); font-size: 11px; }
+.admin-overview-modules { margin-top: 16px; }
+.admin-overview-module-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.admin-overview-module-card { min-width: 0; display: flex; align-items: center; gap: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; color: var(--navy); background: #fff; font: inherit; text-align: left; cursor: pointer; transition: border-color .2s, transform .2s, box-shadow .2s; }
+.admin-overview-module-card:hover, .admin-overview-module-card:focus-visible { border-color: var(--gold); outline: none; transform: translateY(-1px); box-shadow: 0 8px 18px #1e255b0d; }
+.admin-overview-module-card > span:nth-child(2) { min-width: 0; flex: 1; }
+.admin-overview-module-card strong, .admin-overview-module-card small { display: block; }
+.admin-overview-module-card strong { color: var(--navy); font-family: "Montserrat", sans-serif; font-size: 21px; line-height: 1; }
+.admin-overview-module-card small { margin-top: 5px; overflow: hidden; color: var(--muted); font-size: 10px; font-weight: 700; line-height: 1.3; text-overflow: ellipsis; white-space: nowrap; }
+.admin-overview-module-card > svg { flex: 0 0 auto; color: var(--muted); }
+.admin-overview-module-icon { width: 35px; height: 35px; display: grid; flex: 0 0 35px; place-items: center; border-radius: 9px; }
+.admin-overview-module-teal { color: var(--gold-2); background: #09977f1a; }
+.admin-overview-module-navy { color: var(--navy); background: #1e255b0e; }
+.admin-overview-module-gold { color: #8f6b16; background: #d0a9421c; }
+.admin-overview-module-blue { color: #276b91; background: #276b9115; }
+.admin-overview-module-purple { color: #6a4c8b; background: #6a4c8b14; }
+.admin-overview-attention-grid { margin-top: 16px; }
+.admin-heading-icon { color: var(--gold-2); }
+.admin-attention-list { display: grid; gap: 2px; }
+.admin-attention-item { min-width: 0; display: flex; align-items: center; gap: 11px; width: 100%; padding: 12px 0; border: 0; border-top: 1px solid var(--line); color: var(--navy); background: transparent; font: inherit; text-align: left; cursor: pointer; }
+.admin-attention-item:hover, .admin-attention-item:focus-visible { outline: none; color: var(--gold-2); }
+.admin-attention-date { min-width: 82px; color: var(--gold-2); font-size: 10px; font-weight: 700; }
+.admin-attention-item > span:nth-child(2) { min-width: 0; flex: 1; }
+.admin-attention-item strong, .admin-attention-item small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.admin-attention-item strong { color: var(--navy); font-size: 12px; }
+.admin-attention-item small { margin-top: 3px; color: var(--muted); font-size: 10px; }
+.admin-overview-guide { display: grid; gap: 12px; }
+.admin-overview-guide p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.admin-overview-guide strong { display: inline-grid; width: 22px; height: 22px; margin-right: 6px; place-items: center; border-radius: 50%; color: white; background: var(--gold-2); font-size: 10px; }
 .admin-icon-button { width: 36px; height: 36px; border-radius: 7px; color: var(--muted); background: #f4fbf9; }
 .admin-icon-button:hover { color: #8e2c2c; }
 .admin-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 18px; }
@@ -262,6 +290,7 @@ body {
   .admin-stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .admin-dashboard-grid { grid-template-columns: 1fr; }
   .admin-recent-panel { min-height: auto; }
+  .admin-overview-module-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 700px) {
@@ -275,6 +304,7 @@ body {
   .admin-stat-grid { grid-template-columns: 1fr; gap: 10px; }
   .admin-stat-card { padding: 15px; }
   .admin-dashboard-grid { gap: 10px; }
+  .admin-overview-module-grid { grid-template-columns: 1fr; }
   .admin-welcome-panel { min-height: auto; padding: 24px 20px; }
   .admin-dashboard-actions { align-items: stretch; flex-direction: column; }
   .admin-dashboard-actions button { width: 100%; }
