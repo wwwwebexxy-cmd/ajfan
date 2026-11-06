@@ -450,3 +450,51 @@ export function updateCustomerDocument(credentials: Credentials, documentId: num
 export function deleteCustomerDocument(credentials: Credentials, documentId: number) {
   return request<void>(`/customer-documents/${documentId}/`, credentials, { method: "DELETE" });
 }
+
+export type ReminderInput = {
+  reminder_title: string;
+  due_date: string;
+  customer: number | "";
+  notes: string;
+};
+
+export type Reminder = ReminderInput & {
+  id: number;
+  customer_name: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ReminderFilters = {
+  due_from?: string;
+  due_to?: string;
+  customer?: number | "";
+};
+
+export async function listReminders(credentials: Credentials, filters: ReminderFilters = {}) {
+  const query = new URLSearchParams();
+  if (filters.due_from) query.set("due_from", filters.due_from);
+  if (filters.due_to) query.set("due_to", filters.due_to);
+  if (filters.customer) query.set("customer", String(filters.customer));
+  const suffix = query.toString() ? `?${query.toString()}` : "";
+  const payload = await request<Reminder[] | { results: Reminder[] }>(`/reminders/${suffix}`, credentials);
+  return Array.isArray(payload) ? payload : payload.results;
+}
+
+export function createReminder(credentials: Credentials, reminder: ReminderInput) {
+  return request<Reminder>("/reminders/", credentials, {
+    method: "POST",
+    body: JSON.stringify(reminder),
+  });
+}
+
+export function updateReminder(credentials: Credentials, reminderId: number, reminder: ReminderInput) {
+  return request<Reminder>(`/reminders/${reminderId}/`, credentials, {
+    method: "PATCH",
+    body: JSON.stringify(reminder),
+  });
+}
+
+export function deleteReminder(credentials: Credentials, reminderId: number) {
+  return request<void>(`/reminders/${reminderId}/`, credentials, { method: "DELETE" });
+}

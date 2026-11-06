@@ -12,6 +12,7 @@ import { AdminSalesInvoices } from "./admin-sales-invoices";
 import { AdminGovernmentInvoices } from "./admin-government-invoices";
 import { AdminQuotations } from "./admin-quotations";
 import { AdminCustomerDocuments } from "./admin-customer-documents";
+import { AdminReminders } from "./admin-reminders";
 import { Brand } from "./brand";
 
 const emptyCustomer: CustomerInput = {
@@ -321,6 +322,8 @@ export function AdminCustomers() {
             <AdminQuotations credentials={credentials} onLogout={handleLogout} onAddCustomer={openNewCustomer} onAddService={() => navigateTo("services")} />
           ) : activeView === "customer-documents" ? (
             <AdminCustomerDocuments credentials={credentials} onLogout={handleLogout} />
+          ) : activeView === "reminders" ? (
+            <AdminReminders credentials={credentials} onLogout={handleLogout} />
           ) : (
             <>
               <div className="admin-page-heading">
