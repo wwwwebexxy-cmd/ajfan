@@ -4,7 +4,7 @@ import Link from "next/link";
 import { BriefcaseBusiness, FileCheck2, FileText, LayoutDashboard, LogOut, Users, X } from "lucide-react";
 import { Brand } from "./brand";
 
-export type AdminView = "dashboard" | "customers" | "services" | "sales" | "government-invoices" | "quotations";
+export type AdminView = "dashboard" | "customers" | "services" | "sales" | "government-invoices" | "quotations" | "customer-documents";
 
 type AdminSidebarProps = {
   activeView: AdminView;
@@ -21,6 +21,7 @@ const navigation: Array<{ id: AdminView; label: string; icon: typeof LayoutDashb
   { id: "sales", label: "Sales Invoice", icon: FileText },
   { id: "government-invoices", label: "Govt. Invoice", icon: FileCheck2 },
   { id: "quotations", label: "Quotation", icon: FileText },
+  { id: "customer-documents", label: "Customer Documents", icon: FileText },
 ];
 
 export function AdminSidebar({ activeView, isOpen, onClose, onLogout, onNavigate }: AdminSidebarProps) {

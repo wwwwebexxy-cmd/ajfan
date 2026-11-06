@@ -402,3 +402,51 @@ export function updateQuotation(credentials: Credentials, quotationId: number, q
 export function deleteQuotation(credentials: Credentials, quotationId: number) {
   return request<void>(`/quotations/${quotationId}/`, credentials, { method: "DELETE" });
 }
+
+export type CustomerDocumentInput = {
+  document_title: string;
+  expiry_date: string;
+  customer: number | "";
+  notes: string;
+};
+
+export type CustomerDocument = CustomerDocumentInput & {
+  id: number;
+  customer_name: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CustomerDocumentFilters = {
+  expiry_from?: string;
+  expiry_to?: string;
+  customer?: number | "";
+};
+
+export async function listCustomerDocuments(credentials: Credentials, filters: CustomerDocumentFilters = {}) {
+  const query = new URLSearchParams();
+  if (filters.expiry_from) query.set("expiry_from", filters.expiry_from);
+  if (filters.expiry_to) query.set("expiry_to", filters.expiry_to);
+  if (filters.customer) query.set("customer", String(filters.customer));
+  const suffix = query.toString() ? `?${query.toString()}` : "";
+  const payload = await request<CustomerDocument[] | { results: CustomerDocument[] }>(`/customer-documents/${suffix}`, credentials);
+  return Array.isArray(payload) ? payload : payload.results;
+}
+
+export function createCustomerDocument(credentials: Credentials, document: CustomerDocumentInput) {
+  return request<CustomerDocument>("/customer-documents/", credentials, {
+    method: "POST",
+    body: JSON.stringify(document),
+  });
+}
+
+export function updateCustomerDocument(credentials: Credentials, documentId: number, document: CustomerDocumentInput) {
+  return request<CustomerDocument>(`/customer-documents/${documentId}/`, credentials, {
+    method: "PATCH",
+    body: JSON.stringify(document),
+  });
+}
+
+export function deleteCustomerDocument(credentials: Credentials, documentId: number) {
+  return request<void>(`/customer-documents/${documentId}/`, credentials, { method: "DELETE" });
+}

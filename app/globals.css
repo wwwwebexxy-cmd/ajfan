@@ -183,6 +183,26 @@ body {
 .admin-search-clear { position: absolute; top: 50%; right: 9px; width: 26px; height: 26px; display: grid; place-items: center; transform: translateY(-50%); border: 0; border-radius: 6px; color: var(--muted); background: transparent; cursor: pointer; }
 .admin-search-clear:hover { color: var(--navy); background: #f4fbf9; }
 .admin-search-help { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.admin-document-filter-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 18px; }
+.admin-document-filter-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.admin-document-filter-actions .admin-text-button { min-height: 42px; padding: 10px 3px; }
+.admin-document-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.admin-document-export-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.admin-document-table th, .admin-document-table td { white-space: nowrap; }
+.admin-document-table td:nth-child(4) { max-width: 280px; white-space: normal; }
+.admin-document-notes { display: block; max-width: 280px; overflow: hidden; color: var(--muted); line-height: 1.5; text-overflow: ellipsis; }
+.admin-document-options { position: relative; display: inline-block; }
+.admin-document-options-button { min-height: 34px; padding: 7px 10px; }
+.admin-document-options-menu { position: absolute; z-index: 5; top: calc(100% + 5px); right: 0; min-width: 150px; padding: 5px; border: 1px solid var(--line); border-radius: 8px; background: #fff; box-shadow: 0 12px 24px #1e255b1a; }
+.admin-document-options-menu button { width: 100%; display: flex; align-items: center; gap: 7px; padding: 9px 10px; border: 0; border-radius: 6px; color: var(--navy); background: transparent; font: inherit; font-size: 11px; font-weight: 700; text-align: left; cursor: pointer; }
+.admin-document-options-menu button:hover { background: var(--bg); color: var(--gold-2); }
+.admin-document-pagination { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 12px; margin-top: 20px; color: var(--muted); font-size: 11px; }
+.admin-pagination-controls { display: inline-flex; align-items: center; gap: 4px; }
+.admin-pagination-controls .admin-row-action:disabled { cursor: not-allowed; opacity: .4; }
+.admin-pagination-current { min-width: 28px; display: grid; place-items: center; height: 32px; border: 1px solid var(--line); border-radius: 6px; color: var(--navy); background: #fff; font-weight: 700; }
+.admin-document-showing { margin-right: auto; color: var(--gold-2); }
+.admin-document-select-label { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.admin-document-select-label select { min-height: 31px; padding: 5px 23px 5px 7px; border: 1px solid var(--line); border-radius: 5px; color: var(--navy); background: #fff; font: inherit; font-size: 11px; }
 .admin-checkbox-field { display: flex; align-items: center; gap: 10px; align-self: end; min-height: 42px; padding: 10px 0; color: var(--navy); font-size: 12px; font-weight: 700; cursor: pointer; }
 .admin-checkbox-field input { width: 17px; height: 17px; margin: 0; accent-color: var(--gold-2); }
 .admin-image-field input { padding: 10px; border-style: dashed; }
@@ -250,6 +270,12 @@ body {
   .admin-recent-item time { display: none; }
   .admin-list-toolbar { grid-template-columns: 1fr; align-items: stretch; gap: 7px; }
   .admin-search-help { margin-top: 2px; }
+  .admin-document-filter-grid { grid-template-columns: 1fr; }
+  .admin-document-toolbar { align-items: stretch; flex-direction: column; }
+  .admin-document-export-actions { width: 100%; }
+  .admin-document-export-actions .admin-secondary-button { flex: 1; }
+  .admin-document-pagination { justify-content: flex-start; }
+  .admin-document-showing { width: 100%; margin-right: 0; order: -1; }
   .admin-form-grid { grid-template-columns: 1fr; }
   .admin-field-wide { grid-column: auto; }
   .admin-invoice-summary-grid { grid-template-columns: 1fr; }
