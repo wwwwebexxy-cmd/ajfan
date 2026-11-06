@@ -15,7 +15,7 @@ type AdminSidebarProps = {
 };
 
 const navigation: Array<{ id: AdminView; label: string; icon: typeof LayoutDashboard }> = [
-  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { id: "dashboard", label: "Overview", icon: LayoutDashboard },
   { id: "customers", label: "Customers", icon: Users },
   { id: "services", label: "Services", icon: BriefcaseBusiness },
   { id: "sales", label: "Sales Invoice", icon: FileText },

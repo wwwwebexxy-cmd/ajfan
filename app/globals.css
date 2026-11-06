@@ -102,6 +102,17 @@ body {
 .admin-recent-item div span { margin-top: 2px; color: var(--muted); font-size: 11px; }
 .admin-recent-item time { color: var(--muted); font-size: 10px; white-space: nowrap; }
 .admin-recent-empty { margin: 0; padding: 30px 0; color: var(--muted); font-size: 13px; }
+.admin-growth-panel { margin-top: 16px; }
+.admin-chart-description { margin: 7px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.admin-chart-total { display: inline-flex; align-items: center; min-height: 31px; padding: 6px 10px; border-radius: 18px; color: var(--gold-2); background: #f4fbf9; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.admin-chart-wrap { width: 100%; overflow-x: auto; }
+.admin-growth-chart { display: block; width: 100%; min-width: 520px; height: auto; overflow: visible; }
+.admin-chart-gridline { stroke: var(--line); stroke-width: 1; stroke-dasharray: 3 5; }
+.admin-chart-axis-label { fill: var(--muted); font-family: "Poppins", sans-serif; font-size: 11px; }
+.admin-chart-area { fill: #09977f14; }
+.admin-chart-line { fill: none; stroke: var(--gold-2); stroke-linecap: round; stroke-linejoin: round; stroke-width: 3; }
+.admin-chart-point { fill: #fff; stroke: var(--gold-2); stroke-width: 3; }
+.admin-chart-empty { margin: -2px 0 0; color: var(--muted); font-size: 11px; }
 .admin-icon-button { width: 36px; height: 36px; border-radius: 7px; color: var(--muted); background: #f4fbf9; }
 .admin-icon-button:hover { color: #8e2c2c; }
 .admin-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 18px; }

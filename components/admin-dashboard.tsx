@@ -2,6 +2,7 @@
 
 import { ArrowRight, ShieldCheck, UserPlus, Users } from "lucide-react";
 import type { Customer } from "@/lib/ajfan-admin-api";
+import { AdminCustomerGrowthChart } from "./admin-customer-growth-chart";
 
 type AdminDashboardProps = {
   customers: Customer[];
@@ -24,7 +25,7 @@ export function AdminDashboard({ customers, onNewCustomer, onOpenCustomers }: Ad
       <div className="admin-page-heading">
         <div>
           <p className="admin-kicker">Overview</p>
-          <h1>Dashboard</h1>
+          <h1>Overview</h1>
           <p>Welcome back. Manage your customer records from one place.</p>
         </div>
         <button className="admin-primary-button" type="button" onClick={onNewCustomer}>
@@ -79,6 +80,7 @@ export function AdminDashboard({ customers, onNewCustomer, onOpenCustomers }: Ad
           )}
         </section>
       </div>
+      <AdminCustomerGrowthChart customers={customers} />
     </>
   );
 }
