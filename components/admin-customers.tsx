@@ -10,6 +10,7 @@ import { AdminSidebar, AdminView } from "./admin-sidebar";
 import { AdminServices } from "./admin-services";
 import { AdminSalesInvoices } from "./admin-sales-invoices";
 import { AdminGovernmentInvoices } from "./admin-government-invoices";
+import { AdminQuotations } from "./admin-quotations";
 import { Brand } from "./brand";
 
 const emptyCustomer: CustomerInput = {
@@ -315,6 +316,8 @@ export function AdminCustomers() {
             <AdminSalesInvoices credentials={credentials} onLogout={handleLogout} onAddCustomer={openNewCustomer} onAddService={() => navigateTo("services")} />
           ) : activeView === "government-invoices" ? (
             <AdminGovernmentInvoices credentials={credentials} onLogout={handleLogout} onAddCustomer={openNewCustomer} onAddService={() => navigateTo("services")} />
+          ) : activeView === "quotations" ? (
+            <AdminQuotations credentials={credentials} onLogout={handleLogout} onAddCustomer={openNewCustomer} onAddService={() => navigateTo("services")} />
           ) : (
             <>
               <div className="admin-page-heading">

@@ -333,3 +333,72 @@ export async function listGovernmentStaff(credentials: Credentials) {
   const payload = await request<StaffMember[] | { results: StaffMember[] }>("/government-invoices/staff/", credentials);
   return Array.isArray(payload) ? payload : payload.results;
 }
+
+export type QuotationItemInput = {
+  service: number | "";
+  description: string;
+  government_fee: string;
+  service_fee: string;
+  quantity: string;
+  start_date: string;
+  end_date: string;
+};
+
+export type QuotationInput = {
+  quotation_date: string;
+  customer: number | "";
+  items: QuotationItemInput[];
+  discount_amount: string;
+  notes: string;
+};
+
+export type QuotationItem = Omit<QuotationItemInput, "service" | "quantity"> & {
+  id: number;
+  service: number;
+  service_name: string;
+  quantity: number;
+  line_total: string;
+};
+
+export type Quotation = {
+  id: number;
+  quotation_number: string;
+  quotation_date: string;
+  customer: number;
+  customer_name: string;
+  customer_email: string;
+  items: QuotationItem[];
+  subtotal: string;
+  discount_amount: string;
+  total_amount: string;
+  notes: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export async function listQuotations(credentials: Credentials) {
+  const payload = await request<Quotation[] | { results: Quotation[] }>("/quotations/", credentials);
+  return Array.isArray(payload) ? payload : payload.results;
+}
+
+export function createQuotation(credentials: Credentials, quotation: QuotationInput) {
+  return request<Quotation>("/quotations/", credentials, {
+    method: "POST",
+    body: JSON.stringify(quotation),
+  });
+}
+
+export function getQuotation(credentials: Credentials, quotationId: number) {
+  return request<Quotation>(`/quotations/${quotationId}/`, credentials);
+}
+
+export function updateQuotation(credentials: Credentials, quotationId: number, quotation: QuotationInput) {
+  return request<Quotation>(`/quotations/${quotationId}/`, credentials, {
+    method: "PATCH",
+    body: JSON.stringify(quotation),
+  });
+}
+
+export function deleteQuotation(credentials: Credentials, quotationId: number) {
+  return request<void>(`/quotations/${quotationId}/`, credentials, { method: "DELETE" });
+}
