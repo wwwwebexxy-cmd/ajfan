@@ -249,3 +249,87 @@ export function updateSalesInvoice(credentials: Credentials, invoiceId: number, 
 export function deleteSalesInvoice(credentials: Credentials, invoiceId: number) {
   return request<void>(`/sales-invoices/${invoiceId}/`, credentials, { method: "DELETE" });
 }
+
+export type GovernmentInvoiceItemInput = {
+  service: number | "";
+  description: string;
+  government_fee: string;
+  service_fee: string;
+  quantity: string;
+  start_date: string;
+  end_date: string;
+};
+
+export type GovernmentInvoiceInput = {
+  invoice_date: string;
+  customer: number | "";
+  items: GovernmentInvoiceItemInput[];
+  discount_amount: string;
+  received_amount: string;
+  payment_mode: PaymentMode;
+  paid_by_staff: boolean;
+  staff: number | null | "";
+  notes: string;
+};
+
+export type GovernmentInvoiceItem = Omit<GovernmentInvoiceItemInput, "service" | "quantity"> & {
+  id: number;
+  service: number;
+  service_name: string;
+  quantity: number;
+  line_total: string;
+};
+
+export type GovernmentInvoice = {
+  id: number;
+  invoice_number: string;
+  invoice_date: string;
+  customer: number;
+  customer_name: string;
+  customer_email: string;
+  items: GovernmentInvoiceItem[];
+  subtotal: string;
+  discount_amount: string;
+  total_amount: string;
+  received_amount: string;
+  balance_amount: string;
+  payment_mode: PaymentMode;
+  paid_by_staff: boolean;
+  staff: number | null;
+  staff_name: string;
+  notes: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export async function listGovernmentInvoices(credentials: Credentials) {
+  const payload = await request<GovernmentInvoice[] | { results: GovernmentInvoice[] }>("/government-invoices/", credentials);
+  return Array.isArray(payload) ? payload : payload.results;
+}
+
+export function createGovernmentInvoice(credentials: Credentials, invoice: GovernmentInvoiceInput) {
+  return request<GovernmentInvoice>("/government-invoices/", credentials, {
+    method: "POST",
+    body: JSON.stringify(invoice),
+  });
+}
+
+export function getGovernmentInvoice(credentials: Credentials, invoiceId: number) {
+  return request<GovernmentInvoice>(`/government-invoices/${invoiceId}/`, credentials);
+}
+
+export function updateGovernmentInvoice(credentials: Credentials, invoiceId: number, invoice: GovernmentInvoiceInput) {
+  return request<GovernmentInvoice>(`/government-invoices/${invoiceId}/`, credentials, {
+    method: "PATCH",
+    body: JSON.stringify(invoice),
+  });
+}
+
+export function deleteGovernmentInvoice(credentials: Credentials, invoiceId: number) {
+  return request<void>(`/government-invoices/${invoiceId}/`, credentials, { method: "DELETE" });
+}
+
+export async function listGovernmentStaff(credentials: Credentials) {
+  const payload = await request<StaffMember[] | { results: StaffMember[] }>("/government-invoices/staff/", credentials);
+  return Array.isArray(payload) ? payload : payload.results;
+}

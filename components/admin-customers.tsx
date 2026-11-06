@@ -9,6 +9,7 @@ import { AdminDashboard } from "./admin-dashboard";
 import { AdminSidebar, AdminView } from "./admin-sidebar";
 import { AdminServices } from "./admin-services";
 import { AdminSalesInvoices } from "./admin-sales-invoices";
+import { AdminGovernmentInvoices } from "./admin-government-invoices";
 import { Brand } from "./brand";
 
 const emptyCustomer: CustomerInput = {
@@ -312,6 +313,8 @@ export function AdminCustomers() {
             <AdminServices credentials={credentials} onLogout={handleLogout} />
           ) : activeView === "sales" ? (
             <AdminSalesInvoices credentials={credentials} onLogout={handleLogout} onAddCustomer={openNewCustomer} onAddService={() => navigateTo("services")} />
+          ) : activeView === "government-invoices" ? (
+            <AdminGovernmentInvoices credentials={credentials} onLogout={handleLogout} onAddCustomer={openNewCustomer} onAddService={() => navigateTo("services")} />
           ) : (
             <>
               <div className="admin-page-heading">
