@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 export function ScrollReveal() {
   useEffect(() => {
-    const sections = Array.from(document.querySelectorAll<HTMLElement>("main > section:not(.hero)"));
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("main > section:not(.hero):not(.no-scroll-reveal)"));
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 

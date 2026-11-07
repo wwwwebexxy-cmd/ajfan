@@ -120,7 +120,7 @@ export const metadata: Metadata = pageMetadata({
 export default function PrivacyPolicyPage() {
   return (
     <PageFrame>
-      <section className="section privacy-policy-section">
+      <section className="section privacy-policy-section no-scroll-reveal">
         <div className="container">
           <article className="privacy-policy-content">
             <header className="privacy-policy-heading">
