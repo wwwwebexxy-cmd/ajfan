@@ -62,7 +62,7 @@ export function SiteFooter() {
               </div>
             </div>
           </div>
-          <div className="copyright"><span>© 2026 AJFAN Documents Clearing. All rights reserved.</span><span className="footer-legal"><Link href="/privacy-policy">Privacy Policy</Link><span>Terms of Service</span></span></div>
+          <div className="copyright"><span>© 2026 AJFAN Documents Clearing. All rights reserved.</span><span className="footer-legal"><a href="/privacy-policy">Privacy Policy</a><span>Terms of Service</span></span></div>
         </div>
       </footer>
       <WhatsAppFloat />
