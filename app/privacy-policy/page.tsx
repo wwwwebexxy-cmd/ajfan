@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageFrame } from "@/components/page-frame";
-import { pageMetadata } from "@/lib/site-meta";
+import { businessEmail, businessLocations, businessPhone, pageMetadata, siteAlternateName, siteName } from "@/lib/site-meta";
 
 type PolicyBlock = {
   heading?: string;
@@ -8,112 +8,92 @@ type PolicyBlock = {
   items?: string[];
 };
 
+const businessAddress = [
+  businessLocations[0].address.streetAddress,
+  businessLocations[0].address.addressLocality,
+  "United Arab Emirates",
+].join(", ");
+const displayPhone = businessPhone.replace(/^\+971(\d{2})(\d{3})(\d{4})$/, "+971 $1 $2 $3");
+
 const policySections: { heading: string; blocks: PolicyBlock[] }[] = [
   {
-    heading: "1. Who is responsible for your data",
-    blocks: [{ paragraphs: ["The data controller is Al Tawakkal, Al Tawakkal Building, Near Second Signal Musaffah M10, Sanayya, Abu Dhabi, United Arab Emirates. For any privacy question or request, write to enquiry@altawakkal.ae or call +971 58 582 3883 and ask for the data protection contact."] }],
+    heading: "1. About AJFAN and this policy",
+    blocks: [{ paragraphs: [`${siteName}, also presented as ${siteAlternateName}, provides UAE visa, PRO, typing and document clearing, attestation, translation, and business setup support. This policy explains how AJFAN handles personal information when you use this website, contact our team, or ask us to help with a service.`, `For privacy questions or requests, contact AJFAN at ${businessEmail} or ${displayPhone}.`] }],
   },
   {
-    heading: "2. Scope of this policy",
-    blocks: [{ paragraphs: ["This policy covers personal data we collect through altawakkal.ae — our contact, quotation and registration forms, newsletter sign-ups, live-chat and WhatsApp links — and the email, phone and counter enquiries that follow from a website enquiry. It does not cover third-party websites we link to, or the government portals we submit applications through; those are governed by their own privacy notices."] }],
+    heading: "2. Where this policy applies",
+    blocks: [{ paragraphs: ["This policy covers information you give AJFAN through email, phone, WhatsApp, or in person, along with basic technical information that may be recorded when you visit this website. The public website provides information and links to contact AJFAN; it does not currently provide a newsletter sign-up, public account registration, live chat, or enquiry form.", "Government portals and third-party services linked from this website have their own privacy policies and practices."] }],
   },
   {
-    heading: "3. Personal data we collect",
+    heading: "3. Information AJFAN may handle",
     blocks: [
-      { heading: "Data you give us", items: ["Your name, email address, phone or WhatsApp number, company name, the service you are interested in, and your message.", "Documents or images you upload or send so we can handle an application: passport and Emirates ID copies, trade licence details, tenancy contracts, certificates and similar supporting papers.", "Billing and payment references when you engage us for a service."] },
-      { heading: "Data collected automatically", paragraphs: ["IP address and approximate location, device and browser type, operating system, pages viewed, time on page, referring URL and outbound clicks — from server logs and analytics tools."] },
-      { heading: "Data from your communications with us", paragraphs: ["Records of emails, chat transcripts, WhatsApp messages and call notes connected to your enquiry."] },
-      { heading: "Newsletter", paragraphs: ["If you subscribe, we store your email address and your subscription status. Every marketing email we send contains an unsubscribe link, and unsubscribing removes you from future sends."] },
-      { paragraphs: ["We do not ask for sensitive data (health, religious belief, biometric identifiers, political opinions) through website forms, and we ask you not to send it. Where an application legally requires such information, it is collected through the appropriate secure channel instead."] },
+      { heading: "Information you provide", items: ["Your name, phone or WhatsApp number, email address, company details, the service you ask about, and the details in your message.", "Documents and application details you choose to share with AJFAN for a requested service, such as passport or Emirates ID information, visa details, certificates, or business documents.", "Information about services requested, quotations, payments, and related communications where needed to provide or record a service."] },
+      { heading: "Basic technical information", paragraphs: ["The website hosting and security services may record technical details such as an IP address, browser or device information, request time, and pages requested to deliver and protect the website."] },
     ],
   },
   {
-    heading: "4. Why we use your data",
+    heading: "4. How AJFAN uses information",
     blocks: [{ items: [
-      "To respond to your enquiry, prepare a quotation and confirm which service you need.",
-      "To deliver the service you engage us for — PRO services, typing and document clearing, licence and visa applications, attestation and translation.",
-      "To submit and track applications on government and typing portals where the law or the application requires it.",
-      "To keep accounting, invoicing and statutory records.",
-      "To send service updates and, only with your consent or where the law permits, marketing about related services.",
-      "To protect the website and our records: spam and fraud prevention, rate limiting, security monitoring.",
-      "To understand how the site is used so we can improve content and navigation.",
+      "To respond to enquiries and explain relevant UAE services.",
+      "To provide the service you request, including preparing or supporting visa, PRO, typing, document clearing, attestation, translation, and business setup applications.",
+      "To communicate about your request, quotation, service progress, or documents you provide.",
+      "To keep service, accounting, and business records and meet applicable legal requirements.",
+      "To operate, maintain, and protect this website and AJFAN's systems.",
     ] }],
   },
   {
-    heading: "5. Legal bases where the GDPR or UK GDPR applies",
-    blocks: [{ paragraphs: ["If you are in the EU or UK, we rely on: your consent (marketing emails and non-essential cookies); performance of a contract (delivering a service you ordered); legal obligation (statutory records, government filings); and our legitimate interests (answering enquiries, securing the site, improving our services), balanced against your rights. Under UAE Federal Decree-Law No. 45 of 2021 (PDPL) we process personal data on comparable grounds."] }],
+    heading: "5. Legal basis and UAE data protection",
+    blocks: [{ paragraphs: ["AJFAN handles personal information as permitted by applicable law. Depending on the request, this may be necessary to respond to you, provide a service you request, meet a legal obligation, protect legitimate business interests, or act on consent where consent is required.", "Where it applies, AJFAN handles personal data in line with UAE Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data and other applicable requirements."] }],
   },
   {
-    heading: "6. Who we share it with",
+    heading: "6. When information may be shared",
     blocks: [
+      { paragraphs: ["AJFAN may share only the information needed for the relevant purpose with:"] },
       { items: [
-        "Service providers that run parts of our operation — web hosting and email delivery, form processing, newsletter delivery (Mailchimp), analytics (Google Analytics through Google Site Kit, Microsoft Clarity), advertising measurement (Meta Pixel), and live-chat / WhatsApp widgets. They act on our instructions and are bound by their own data-processing terms.",
-        "Government bodies and typing, immigration and judicial portals (for example ICP, the Department of Economic Development, ADJD, the municipality, attestation authorities) where an application you asked us to handle requires it.",
-        "Professional advisers — auditors, accountants and lawyers — where necessary and under confidentiality.",
-        "Authorities where we are legally required to disclose, or to establish or defend a legal claim.",
+        "Staff and service providers who help operate the website, communicate with customers, or provide AJFAN's services.",
+        "Relevant UAE government departments, authorities, or application portals when you ask AJFAN to prepare or submit an application and the information is needed for that service.",
+        "Professional advisers or authorities where required to meet legal obligations or handle a legal claim.",
       ] },
-      { paragraphs: ["We do not sell personal data, and we do not share it so that third parties can build their own advertising lists."] },
+      { paragraphs: ["This website links to WhatsApp, maps, Instagram, and Facebook. If you use those services, the relevant provider handles information under its own privacy policy."] },
     ],
   },
   {
-    heading: "7. International transfers",
-    blocks: [{ paragraphs: ["Some providers (hosting, email delivery, analytics, chat) process data outside the UAE, typically in the European Union or the United States. Where that happens we rely on the provider’s contractual safeguards and standard contractual clauses, and we limit what is shared to what the service needs."] }],
+    heading: "7. Storage and international processing",
+    blocks: [{ paragraphs: ["Website hosting, email, messaging, or other service providers may process information in locations outside the UAE. Where a transfer is subject to legal requirements, AJFAN will handle it in accordance with those requirements. Third-party providers' own privacy notices explain their processing in more detail."] }],
   },
   {
-    heading: "8. How long we keep it",
-    blocks: [{ items: [
-      "Website enquiries that do not become client engagements: up to 24 months after the last contact.",
-      "Client files and application documents: for the engagement, then for the retention period UAE record-keeping rules require (up to 5 years) and any applicable limitation period.",
-      "Invoices and accounting records: as required by UAE tax and commercial law.",
-      "Newsletter subscriptions: until you unsubscribe.",
-      "Server and security logs: up to 12 months.",
-    ] }],
+    heading: "8. How long information is kept",
+    blocks: [{ paragraphs: ["AJFAN keeps information for as long as it is reasonably needed to respond to you, provide and document a service, meet applicable record-keeping requirements, resolve disputes, and protect business systems. When it is no longer needed for those purposes, it will be deleted or securely disposed of where appropriate and permitted by law."] }],
   },
   {
-    heading: "9. Cookies and similar technologies",
-    blocks: [
-      { paragraphs: ["altawakkal.ae uses cookies and similar browser storage for:"] },
-      { items: [
-        "Essential operation — keeping your session, remembering your preferences and protecting forms from abuse. These cannot be switched off without breaking the site.",
-        "Analytics — aggregate statistics about which pages and services are used (Google Analytics, Microsoft Clarity).",
-        "Advertising measurement — telling us whether an advert led to an enquiry (Meta Pixel).",
-        "Embedded features — chat and WhatsApp widgets, video and map embeds, which may set their own cookies.",
-      ] },
-      { paragraphs: ["Where the law requires it, we ask for your consent before setting non-essential cookies, and you can withdraw that consent at any time. You can also block or delete cookies in your browser settings — blocking essential cookies may stop forms and sign-in from working. Deleting cookies does not delete data already collected; use the rights in section 10 for that."] },
-    ],
+    heading: "9. Cookies and website links",
+    blocks: [{ paragraphs: ["The public website does not currently include analytics or advertising scripts in its application code. The hosting provider may use essential technical storage or logs to deliver and protect the website. External websites or apps linked here may use their own cookies or similar technologies under their own policies.", "You can manage cookies and storage through your browser settings. Blocking essential technical storage may affect how a website works."] }],
   },
   {
-    heading: "10. Your rights",
-    blocks: [{ paragraphs: [
-      "Subject to applicable law, you can ask us to: confirm what data we hold and give you a copy; correct inaccurate data; delete data we no longer need; restrict or object to certain processing, including direct marketing; provide your data in a portable format; and withdraw a consent you gave earlier.",
-      "Email enquiry@altawakkal.ae with “Privacy request” in the subject line. We may ask you to confirm your identity, and we respond within 30 days unless the law allows longer, in which case we tell you why. If you are in the EU or UK you may also complain to your local supervisory authority; in the UAE you may contact the UAE Data Office.",
-    ] }],
+    heading: "10. Your choices and data rights",
+    blocks: [{ paragraphs: ["Subject to applicable law, you may ask AJFAN about personal information relating to you, request correction of inaccurate information, or request deletion or restriction of processing where those rights apply. You may also withdraw consent where processing is based on your consent.", `To make a privacy request, email ${businessEmail} with “Privacy request” in the subject line or call ${displayPhone}. AJFAN may need to verify your identity before responding. You may also contact the UAE Data Office where applicable.`] }],
   },
   {
-    heading: "11. Security",
-    blocks: [{ paragraphs: ["The site is served over HTTPS. Access to enquiry and client records is limited to the staff who need it, we use access-controlled systems and backups, and we keep the number of third-party scripts able to see page data to a minimum. No method of transmission or storage is completely secure: if a breach affects your rights, we notify you and the relevant authority as required by law."] }],
+    heading: "11. Protecting information",
+    blocks: [{ paragraphs: ["AJFAN takes reasonable steps to protect information handled for its website and services. No online transmission or storage method can be guaranteed completely secure. Please use AJFAN's contact details if you have a concern about information you have shared."] }],
   },
   {
-    heading: "12. Children",
-    blocks: [{ paragraphs: ["Our services are for businesses and adults. The website is not directed at children under 18 and we do not knowingly collect their data through it. If you believe a child has sent us personal data, contact us and we will delete it."] }],
+    heading: "12. Information about children",
+    blocks: [{ paragraphs: ["Some family or visa services may involve information about a child. Where an application requires a child's information, a parent or legal guardian should provide it and be authorized to do so."] }],
   },
   {
-    heading: "13. Links to other sites",
-    blocks: [{ paragraphs: ["Pages on this site link to government portals, maps and social networks. Once you leave altawakkal.ae, the destination website’s privacy policy applies."] }],
+    heading: "13. Changes to this policy",
+    blocks: [{ paragraphs: ["AJFAN may update this policy when its services, website, or applicable requirements change. The date at the top of this page shows when it was last updated."] }],
   },
   {
-    heading: "14. Changes to this policy",
-    blocks: [{ paragraphs: ["We update this policy when our tools or the law change. The version published here is the current one, and the “last updated” date at the top always reflects the latest change. Where a change materially affects existing clients, we notify them by email when we hold an address."] }],
-  },
-  {
-    heading: "15. Contact us",
-    blocks: [{ paragraphs: ["Al Tawakkal", "Al Tawakkal Building, Near Second Signal Musaffah M10, Sanayya, Abu Dhabi, UAE", "Email: enquiry@altawakkal.ae", "Phone: +971 58 582 3883", "Or use our contact page."] }],
+    heading: "14. Contact AJFAN",
+    blocks: [{ paragraphs: [siteName, businessAddress, `Email: ${businessEmail}`, `Phone: ${displayPhone}`, "WhatsApp: contact us using the same phone number."] }],
   },
 ];
 
 export const metadata: Metadata = pageMetadata({
-  title: "Privacy Policy",
-  description: "Read the privacy policy and how personal data is handled.",
+  title: "AJFAN Privacy Policy",
+  description: "Learn how AJFAN Documents Clearing handles personal information for its UAE services and website.",
   path: "/privacy-policy",
 });
 
@@ -124,11 +104,11 @@ export default function PrivacyPolicyPage() {
         <div className="container">
           <article className="privacy-policy-content">
             <header className="privacy-policy-heading">
-              <div className="eyebrow">Legal</div>
+              <div className="eyebrow">AJFAN Documents Clearing</div>
               <h1 className="title">Privacy Policy</h1>
-              <p className="privacy-policy-updated">Last updated: 21 October 2026</p>
+              <p className="privacy-policy-updated">Last updated: 8 November 2026</p>
             </header>
-            <p className="privacy-policy-document-intro">Al Tawakkal (“we”, “us”, “our”) operates altawakkal.ae, the website for our business setup, typing, document clearing and government services in Abu Dhabi, United Arab Emirates. This policy explains what personal data we collect through the website and our enquiry channels, why we collect it, who we share it with, how long we keep it, and the choices and rights you have.</p>
+            <p className="privacy-policy-document-intro">This policy describes how {siteName} ({siteAlternateName}) handles information when you visit this website, contact our team, or request our UAE government and business services.</p>
             <div className="privacy-policy-document">
               {policySections.map((section) => (
                 <section key={section.heading}>
