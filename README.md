@@ -5,7 +5,7 @@
 The frontend admin area is available at:
 
 ```text
-http://localhost:3000/ajifan-documents
+http://localhost:3000/ajfan-documents
 ```
 
 It requires an admin email and password from the Django backend. Credentials

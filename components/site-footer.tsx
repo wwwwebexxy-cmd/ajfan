@@ -37,7 +37,7 @@ export function SiteFooter() {
               <Link href="/about">About Us</Link>
               <Link href="/services">Services</Link>
               <Link href="/contact">Contact</Link>
-              <Link href="/ajifan-documents">Ajifan Documents</Link>
+              <Link href="/ajfan-documents">Ajfan Documents</Link>
             </div>
             <div className="footer-contact">
               <h4>CONTACT</h4>

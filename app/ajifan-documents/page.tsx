@@ -1,12 +1,5 @@
-import type { Metadata } from "next";
-import { AdminCustomers } from "@/components/admin-customers";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Ajifan Documents Admin",
-  description: "Private AJFAN customer administration.",
-  robots: { index: false, follow: false },
-};
-
-export default function AjifanDocumentsPage() {
-  return <AdminCustomers />;
+export default function AjifanDocumentsRedirect() {
+  redirect("/ajfan-documents");
 }
