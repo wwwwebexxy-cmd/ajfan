@@ -271,7 +271,7 @@ export function AdminCustomers() {
             <span className="admin-lock-mark" aria-hidden="true"><ShieldCheck size={20} /></span>
           </div>
           <p className="admin-kicker">Private workspace</p>
-          <h1>Ajifan Documents</h1>
+          <h1>Ajfan Documents</h1>
           <p className="admin-intro">Sign in with your admin email and password to manage customers.</p>
           <form className="admin-login-form" onSubmit={handleLogin}>
             <label htmlFor="admin-email">Email</label>
