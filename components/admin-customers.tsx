@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, LogIn, Menu, Plus, RefreshCw, Search, ShieldCheck, Users, X } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { AdminApiError, createCustomer, Credentials, CustomerInput, deleteCustomer, getCustomer, listCustomers, Customer, updateCustomer } from "@/lib/ajfan-admin-api";
 import { AdminCustomerDetails, AdminDeleteCustomer, CustomerActionIcons } from "./admin-customer-dialogs";
 import { AdminDashboard } from "./admin-dashboard";
@@ -30,6 +30,8 @@ const emptyCustomer: CustomerInput = {
   trn: "",
   notes: "",
 };
+
+const ADMIN_SESSION_KEY = "ajfan-admin-session";
 
 const customerFields: Array<{ name: keyof CustomerInput; label: string; type?: string; wide?: boolean }> = [
   { name: "name", label: "Customer name" },
@@ -75,6 +77,7 @@ function customerToForm(customer: Customer): CustomerInput {
 
 export function AdminCustomers() {
   const [credentials, setCredentials] = useState<Credentials | null>(null);
+  const [authReady, setAuthReady] = useState(false);
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [customerForm, setCustomerForm] = useState<CustomerInput>(emptyCustomer);
@@ -92,6 +95,59 @@ export function AdminCustomers() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
 
+  useEffect(() => {
+    let cancelled = false;
+    const storedSession = window.sessionStorage.getItem(ADMIN_SESSION_KEY);
+
+    if (!storedSession) {
+      setAuthReady(true);
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    let savedCredentials: Credentials | null = null;
+    try {
+      const parsed = JSON.parse(storedSession) as Partial<Credentials>;
+      if (typeof parsed.email === "string" && typeof parsed.password === "string" && parsed.email && parsed.password) {
+        savedCredentials = { email: parsed.email, password: parsed.password };
+      }
+    } catch {
+      window.sessionStorage.removeItem(ADMIN_SESSION_KEY);
+    }
+
+    if (!savedCredentials) {
+      setAuthReady(true);
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    setBusy(true);
+    void listCustomers(savedCredentials)
+      .then((records) => {
+        if (cancelled) return;
+        setCredentials(savedCredentials);
+        setCustomers(records);
+        setActiveView("dashboard");
+      })
+      .catch(() => {
+        if (cancelled) return;
+        window.sessionStorage.removeItem(ADMIN_SESSION_KEY);
+        setCredentials(null);
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setBusy(false);
+          setAuthReady(true);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
@@ -102,6 +158,7 @@ export function AdminCustomers() {
 
     try {
       const records = await listCustomers(nextCredentials);
+      window.sessionStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(nextCredentials));
       setCredentials(nextCredentials);
       setCustomers(records);
       setActiveView("dashboard");
@@ -114,6 +171,7 @@ export function AdminCustomers() {
   }
 
   function handleLogout() {
+    window.sessionStorage.removeItem(ADMIN_SESSION_KEY);
     setCredentials(null);
     setCustomers([]);
     setCustomerForm(emptyCustomer);
@@ -261,6 +319,14 @@ export function AdminCustomers() {
   const filteredCustomers = normalizedSearch
     ? customers.filter((customer) => [customer.name, customer.email, customer.phone].some((value) => value.toLowerCase().includes(normalizedSearch)))
     : customers;
+
+  if (!authReady) {
+    return (
+      <main className="admin-shell admin-login-shell">
+        <div className="admin-login-card" role="status" aria-live="polite">Restoring admin session…</div>
+      </main>
+    );
+  }
 
   if (!credentials) {
     return (
