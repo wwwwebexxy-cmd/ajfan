@@ -153,6 +153,44 @@ async function request<T>(path: string, credentials: Credentials, init?: Request
   return response.json() as Promise<T>;
 }
 
+async function requestBlob(path: string, credentials: Credentials): Promise<Blob> {
+  const headers = new Headers();
+  headers.set("Accept", "application/pdf");
+  headers.set("Authorization", `Basic ${encodeBasicAuth(credentials)}`);
+
+  const response = await fetch(`/api/backend${path}`, {
+    cache: "no-store",
+    headers,
+  });
+
+  if (!response.ok) throw new AdminApiError(response.status, await readError(response));
+  return response.blob();
+}
+
+export function getAdminPdf(credentials: Credentials, path: string) {
+  return requestBlob(path, credentials);
+}
+
+export function getAdminPdfAtSourcePath(credentials: Credentials, sourcePath: string) {
+  return requestBlob(sourcePath.replace(/^\/api/, ""), credentials);
+}
+
+export function saveAdminPdf(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.click();
+  window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+}
+
+export function openAdminPdf(blob: Blob) {
+  const url = URL.createObjectURL(blob);
+  const preview = window.open(url, "_blank", "noopener,noreferrer");
+  if (!preview) throw new Error("Allow pop-ups to view the PDF.");
+  window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+}
+
 export async function listCustomers(credentials: Credentials) {
   const payload = await request<Customer[] | { results: Customer[] }>("/customers/", credentials);
   return Array.isArray(payload) ? payload : payload.results;
@@ -461,6 +499,9 @@ export type ReminderInput = {
 export type Reminder = ReminderInput & {
   id: number;
   customer_name: string;
+  source_document_type: "customer-document" | "sales-invoice" | "government-invoice" | "quotation" | null;
+  source_document_id: number | null;
+  source_pdf_path: string | null;
   created_at: string;
   updated_at: string;
 };

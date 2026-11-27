@@ -8,6 +8,7 @@ import {
   Credentials,
   Customer,
   deleteSalesInvoice,
+  getAdminPdf,
   listCustomers,
   listSalesInvoices,
   listServices,
@@ -18,6 +19,7 @@ import {
   Service,
   StaffMember,
   updateSalesInvoice,
+  saveAdminPdf,
 } from "@/lib/ajfan-admin-api";
 import { AdminDeleteSalesInvoice, SalesInvoiceActionIcons, SalesInvoiceDetailsDialog } from "./admin-sales-invoice-dialogs";
 
@@ -239,6 +241,18 @@ export function AdminSalesInvoices({ credentials, onLogout, onAddCustomer, onAdd
     }
   }
 
+  async function downloadInvoicePdf(invoice: SalesInvoice) {
+    setError("");
+    try {
+      const pdf = await getAdminPdf(credentials, `/sales-invoices/${invoice.id}/pdf/`);
+      saveAdminPdf(pdf, `sales-invoice-${invoice.invoice_number}.pdf`);
+      setNotice(`Sales invoice #${invoice.invoice_number} PDF downloaded.`);
+    } catch (downloadError) {
+      if (isAuthError(downloadError)) onLogout();
+      else setError(downloadError instanceof AdminApiError ? downloadError.message : "Could not download the sales invoice PDF.");
+    }
+  }
+
   const normalizedSearch = searchTerm.trim().toLowerCase();
   const filteredInvoices = normalizedSearch
     ? invoices.filter((invoice) => [invoice.invoice_number, invoice.customer_name, invoice.customer_email].some((value) => value.toLowerCase().includes(normalizedSearch)))
@@ -320,10 +334,10 @@ export function AdminSalesInvoices({ credentials, onLogout, onAddCustomer, onAdd
       <section className="admin-panel" aria-labelledby="sales-invoice-list-heading">
         <div className="admin-panel-heading"><div><p className="admin-kicker">Billing records</p><h2 id="sales-invoice-list-heading">Sales invoice list</h2></div><span className="admin-count"><FileText size={15} /> {filteredInvoices.length}{normalizedSearch ? ` of ${invoices.length}` : ""} {filteredInvoices.length === 1 ? "invoice" : "invoices"}</span></div>
         <div className="admin-list-toolbar"><label className="admin-search-label" htmlFor="sales-invoice-search">Search invoices</label><div className="admin-search-control"><Search size={17} aria-hidden="true" /><input id="sales-invoice-search" className="admin-search-input" type="search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Invoice number or customer" />{searchTerm && <button className="admin-search-clear" type="button" aria-label="Clear invoice search" onClick={() => setSearchTerm("")}><X size={15} /></button>}</div><span className="admin-search-help">Search by invoice number, customer name or email.</span></div>
-        {loading ? <div className="admin-empty-state" role="status">Loading sales invoices…</div> : invoices.length === 0 ? <div className="admin-empty-state"><FileText size={28} /><h3>No sales invoices yet</h3><p>Create the first invoice using your existing customers and services.</p><button className="admin-primary-button" type="button" onClick={openNewInvoice}><Plus size={17} /> New sales invoice</button></div> : filteredInvoices.length === 0 ? <div className="admin-empty-state"><Search size={28} /><h3>No matching invoices</h3><p>Try another invoice number or customer.</p><button className="admin-secondary-button" type="button" onClick={() => setSearchTerm("")}>Clear search</button></div> : <div className="admin-table-wrap"><table className="admin-table admin-invoice-table"><thead><tr><th scope="col">Invoice</th><th scope="col">Date</th><th scope="col">Customer</th><th scope="col">Total</th><th scope="col">Balance</th><th scope="col">Actions</th></tr></thead><tbody>{filteredInvoices.map((invoice) => <tr key={invoice.id}><th scope="row">#{invoice.invoice_number}</th><td>{formatDate(invoice.invoice_date)}</td><td><strong>{invoice.customer_name}</strong><span className="admin-table-subtext">{invoice.customer_email}</span></td><td><strong className="admin-invoice-total">{formatMoney(invoice.total_amount)}</strong></td><td><strong className={Number(invoice.balance_amount) > 0 ? "admin-invoice-balance-due" : "admin-invoice-balance-paid"}>{formatMoney(invoice.balance_amount)}</strong></td><td><SalesInvoiceActionIcons invoiceNumber={invoice.invoice_number} onView={() => setSelectedInvoice(invoice)} onEdit={() => openEditInvoice(invoice)} onDelete={() => { setDeleteTarget(invoice); setSelectedInvoice(null); setError(""); }} /></td></tr>)}</tbody></table></div>}
+        {loading ? <div className="admin-empty-state" role="status">Loading sales invoices…</div> : invoices.length === 0 ? <div className="admin-empty-state"><FileText size={28} /><h3>No sales invoices yet</h3><p>Create the first invoice using your existing customers and services.</p><button className="admin-primary-button" type="button" onClick={openNewInvoice}><Plus size={17} /> New sales invoice</button></div> : filteredInvoices.length === 0 ? <div className="admin-empty-state"><Search size={28} /><h3>No matching invoices</h3><p>Try another invoice number or customer.</p><button className="admin-secondary-button" type="button" onClick={() => setSearchTerm("")}>Clear search</button></div> : <div className="admin-table-wrap"><table className="admin-table admin-invoice-table"><thead><tr><th scope="col">Invoice</th><th scope="col">Date</th><th scope="col">Customer</th><th scope="col">Total</th><th scope="col">Balance</th><th scope="col">Actions</th></tr></thead><tbody>{filteredInvoices.map((invoice) => <tr key={invoice.id}><th scope="row">#{invoice.invoice_number}</th><td>{formatDate(invoice.invoice_date)}</td><td><strong>{invoice.customer_name}</strong><span className="admin-table-subtext">{invoice.customer_email}</span></td><td><strong className="admin-invoice-total">{formatMoney(invoice.total_amount)}</strong></td><td><strong className={Number(invoice.balance_amount) > 0 ? "admin-invoice-balance-due" : "admin-invoice-balance-paid"}>{formatMoney(invoice.balance_amount)}</strong></td><td><SalesInvoiceActionIcons invoiceNumber={invoice.invoice_number} onView={() => setSelectedInvoice(invoice)} onEdit={() => openEditInvoice(invoice)} onDownload={() => void downloadInvoicePdf(invoice)} onDelete={() => { setDeleteTarget(invoice); setSelectedInvoice(null); setError(""); }} /></td></tr>)}</tbody></table></div>}
       </section>
 
-      {selectedInvoice && <SalesInvoiceDetailsDialog invoice={selectedInvoice} onClose={() => setSelectedInvoice(null)} />}
+      {selectedInvoice && <SalesInvoiceDetailsDialog invoice={selectedInvoice} onClose={() => setSelectedInvoice(null)} onDownload={() => void downloadInvoicePdf(selectedInvoice)} />}
       {deleteTarget && <AdminDeleteSalesInvoice invoice={deleteTarget} isDeleting={deleteBusy} onCancel={() => setDeleteTarget(null)} onConfirm={confirmDelete} />}
     </>
   );

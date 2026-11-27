@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, Pencil, Trash2, X } from "lucide-react";
+import { Download, Eye, Pencil, Trash2, X } from "lucide-react";
 import type { SalesInvoice } from "@/lib/ajfan-admin-api";
 
 function formatMoney(value: string | number) {
@@ -16,7 +16,7 @@ function paymentModeLabel(value: SalesInvoice["payment_mode"]) {
   return value === "bank" ? "Bank" : value === "card" ? "Card" : "Cash";
 }
 
-export function SalesInvoiceDetailsDialog({ invoice, onClose }: { invoice: SalesInvoice; onClose: () => void }) {
+export function SalesInvoiceDetailsDialog({ invoice, onClose, onDownload }: { invoice: SalesInvoice; onClose: () => void; onDownload: () => void }) {
   return (
     <div className="admin-modal-layer">
       <section className="admin-modal admin-invoice-detail-modal" role="dialog" aria-modal="true" aria-labelledby="sales-invoice-details-heading">
@@ -59,7 +59,7 @@ export function SalesInvoiceDetailsDialog({ invoice, onClose }: { invoice: Sales
           <span>Balance <strong>{formatMoney(invoice.balance_amount)}</strong></span>
         </div>
         {invoice.notes && <div className="admin-invoice-notes"><span>Notes</span><p>{invoice.notes}</p></div>}
-        <div className="admin-modal-actions"><button className="admin-secondary-button" type="button" onClick={onClose}>Close</button></div>
+        <div className="admin-modal-actions"><button className="admin-secondary-button" type="button" onClick={onClose}>Close</button><button className="admin-primary-button" type="button" onClick={onDownload}><Download size={16} /> Download PDF</button></div>
       </section>
     </div>
   );
@@ -82,11 +82,12 @@ export function AdminDeleteSalesInvoice({ invoice, isDeleting, onCancel, onConfi
   );
 }
 
-export function SalesInvoiceActionIcons({ invoiceNumber, onView, onEdit, onDelete }: { invoiceNumber: string; onView: () => void; onEdit: () => void; onDelete: () => void }) {
+export function SalesInvoiceActionIcons({ invoiceNumber, onView, onEdit, onDelete, onDownload }: { invoiceNumber: string; onView: () => void; onEdit: () => void; onDelete: () => void; onDownload: () => void }) {
   return (
     <div className="admin-row-actions">
       <button className="admin-row-action admin-row-action-view" type="button" aria-label={`View invoice ${invoiceNumber}`} onClick={onView}><Eye size={16} /></button>
       <button className="admin-row-action admin-row-action-edit" type="button" aria-label={`Edit invoice ${invoiceNumber}`} onClick={onEdit}><Pencil size={16} /></button>
+      <button className="admin-row-action" type="button" aria-label={`Download invoice ${invoiceNumber} PDF`} onClick={onDownload}><Download size={16} /></button>
       <button className="admin-row-action admin-row-action-delete" type="button" aria-label={`Delete invoice ${invoiceNumber}`} onClick={onDelete}><Trash2 size={16} /></button>
     </div>
   );

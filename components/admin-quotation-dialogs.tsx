@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, Pencil, Trash2, X } from "lucide-react";
+import { Download, Eye, Pencil, Trash2, X } from "lucide-react";
 import type { Quotation } from "@/lib/ajfan-admin-api";
 
 function formatMoney(value: string | number) {
@@ -12,7 +12,7 @@ function formatDate(value: string) {
   return new Intl.DateTimeFormat("en-AE", { dateStyle: "medium" }).format(new Date(`${value.slice(0, 10)}T00:00:00`));
 }
 
-export function QuotationDetailsDialog({ quotation, onClose }: { quotation: Quotation; onClose: () => void }) {
+export function QuotationDetailsDialog({ quotation, onClose, onDownload }: { quotation: Quotation; onClose: () => void; onDownload: () => void }) {
   return (
     <div className="admin-modal-layer">
       <section className="admin-modal admin-invoice-detail-modal" role="dialog" aria-modal="true" aria-labelledby="quotation-details-heading">
@@ -31,7 +31,7 @@ export function QuotationDetailsDialog({ quotation, onClose }: { quotation: Quot
         </div>
         <div className="admin-invoice-totals admin-invoice-detail-totals"><span>Total invoice <strong>{formatMoney(quotation.subtotal)}</strong></span><span>Discount <strong>{formatMoney(quotation.discount_amount)}</strong></span><span>Total net <strong>{formatMoney(quotation.total_amount)}</strong></span></div>
         {quotation.notes && <div className="admin-invoice-notes"><span>Notes</span><p>{quotation.notes}</p></div>}
-        <div className="admin-modal-actions"><button className="admin-secondary-button" type="button" onClick={onClose}>Close</button></div>
+        <div className="admin-modal-actions"><button className="admin-secondary-button" type="button" onClick={onClose}>Close</button><button className="admin-primary-button" type="button" onClick={onDownload}><Download size={16} /> Download PDF</button></div>
       </section>
     </div>
   );
@@ -48,6 +48,6 @@ export function AdminDeleteQuotation({ quotation, isDeleting, onCancel, onConfir
   );
 }
 
-export function QuotationActionIcons({ quotationNumber, onView, onEdit, onDelete }: { quotationNumber: string; onView: () => void; onEdit: () => void; onDelete: () => void }) {
-  return <div className="admin-row-actions"><button className="admin-row-action admin-row-action-view" type="button" aria-label={`View quotation ${quotationNumber}`} onClick={onView}><Eye size={16} /></button><button className="admin-row-action admin-row-action-edit" type="button" aria-label={`Edit quotation ${quotationNumber}`} onClick={onEdit}><Pencil size={16} /></button><button className="admin-row-action admin-row-action-delete" type="button" aria-label={`Delete quotation ${quotationNumber}`} onClick={onDelete}><Trash2 size={16} /></button></div>;
+export function QuotationActionIcons({ quotationNumber, onView, onEdit, onDelete, onDownload }: { quotationNumber: string; onView: () => void; onEdit: () => void; onDelete: () => void; onDownload: () => void }) {
+  return <div className="admin-row-actions"><button className="admin-row-action admin-row-action-view" type="button" aria-label={`View quotation ${quotationNumber}`} onClick={onView}><Eye size={16} /></button><button className="admin-row-action admin-row-action-edit" type="button" aria-label={`Edit quotation ${quotationNumber}`} onClick={onEdit}><Pencil size={16} /></button><button className="admin-row-action" type="button" aria-label={`Download quotation ${quotationNumber} PDF`} onClick={onDownload}><Download size={16} /></button><button className="admin-row-action admin-row-action-delete" type="button" aria-label={`Delete quotation ${quotationNumber}`} onClick={onDelete}><Trash2 size={16} /></button></div>;
 }

@@ -8,11 +8,13 @@ import {
   Credentials,
   Customer,
   deleteQuotation,
+  getAdminPdf,
   listCustomers,
   listQuotations,
   listServices,
   Quotation,
   QuotationInput,
+  saveAdminPdf,
   Service,
   updateQuotation,
 } from "@/lib/ajfan-admin-api";
@@ -220,6 +222,18 @@ export function AdminQuotations({ credentials, onLogout, onAddCustomer, onAddSer
     }
   }
 
+  async function downloadQuotationPdf(quotation: Quotation) {
+    setError("");
+    try {
+      const pdf = await getAdminPdf(credentials, `/quotations/${quotation.id}/pdf/`);
+      saveAdminPdf(pdf, `quotation-${quotation.quotation_number}.pdf`);
+      setNotice(`Quotation #${quotation.quotation_number} PDF downloaded.`);
+    } catch (downloadError) {
+      if (isAuthError(downloadError)) onLogout();
+      else setError(downloadError instanceof AdminApiError ? downloadError.message : "Could not download the quotation PDF.");
+    }
+  }
+
   const normalizedSearch = searchTerm.trim().toLowerCase();
   const filteredQuotations = normalizedSearch
     ? quotations.filter((quotation) => [quotation.quotation_number, quotation.customer_name, quotation.customer_email].some((value) => value.toLowerCase().includes(normalizedSearch)))
@@ -236,8 +250,8 @@ export function AdminQuotations({ credentials, onLogout, onAddCustomer, onAddSer
         <div className="admin-invoice-summary-grid"><div className="admin-invoice-summary-card"><p className="admin-kicker">Quotation summary</p><div className="admin-invoice-totals"><span>Total invoice <strong>{formatMoney(totals.subtotal)}</strong></span><label>Discount amount<input type="number" min="0" step="0.01" value={quotationForm.discount_amount} onChange={(event) => setQuotationForm((current) => ({ ...current, discount_amount: event.target.value }))} /></label><span>Total net <strong>{formatMoney(totals.total)}</strong></span></div></div><div className="admin-invoice-summary-card"><p className="admin-kicker">Additional details</p><label htmlFor="quotation-notes">Notes<textarea id="quotation-notes" rows={6} value={quotationForm.notes} onChange={(event) => setQuotationForm((current) => ({ ...current, notes: event.target.value }))} /></label></div></div>
         <div className="admin-form-actions"><button className="admin-secondary-button" type="button" onClick={closeForm}>Cancel</button><button className="admin-primary-button" type="submit" disabled={busy}><CheckCircle2 size={16} /> {busy ? "Saving…" : editingQuotation ? "Save changes" : "Save quotation"}</button></div>
       </form></section>}
-    <section className="admin-panel" aria-labelledby="quotation-list-heading"><div className="admin-panel-heading"><div><p className="admin-kicker">Quotation records</p><h2 id="quotation-list-heading">Quotation list</h2></div><span className="admin-count"><FileText size={15} /> {filteredQuotations.length}{normalizedSearch ? ` of ${quotations.length}` : ""} {filteredQuotations.length === 1 ? "quotation" : "quotations"}</span></div><div className="admin-list-toolbar"><label className="admin-search-label" htmlFor="quotation-search">Search quotations</label><div className="admin-search-control"><Search size={17} aria-hidden="true" /><input id="quotation-search" className="admin-search-input" type="search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Quotation number or customer" />{searchTerm && <button className="admin-search-clear" type="button" aria-label="Clear quotation search" onClick={() => setSearchTerm("")}><X size={15} /></button>}</div><span className="admin-search-help">Search by quotation number, customer name or email.</span></div>{loading ? <div className="admin-empty-state" role="status">Loading quotations…</div> : quotations.length === 0 ? <div className="admin-empty-state"><FileText size={28} /><h3>No quotations yet</h3><p>Create the first quotation using your existing customers and services.</p><button className="admin-primary-button" type="button" onClick={openNewQuotation}><Plus size={17} /> New quotation</button></div> : filteredQuotations.length === 0 ? <div className="admin-empty-state"><Search size={28} /><h3>No matching quotations</h3><p>Try another quotation number or customer.</p><button className="admin-secondary-button" type="button" onClick={() => setSearchTerm("")}>Clear search</button></div> : <div className="admin-table-wrap"><table className="admin-table admin-invoice-table"><thead><tr><th scope="col">Quotation</th><th scope="col">Date</th><th scope="col">Customer</th><th scope="col">Total net</th><th scope="col">Actions</th></tr></thead><tbody>{filteredQuotations.map((quotation) => <tr key={quotation.id}><th scope="row">#{quotation.quotation_number}</th><td>{formatDate(quotation.quotation_date)}</td><td><strong>{quotation.customer_name}</strong><span className="admin-table-subtext">{quotation.customer_email}</span></td><td><strong className="admin-invoice-total">{formatMoney(quotation.total_amount)}</strong></td><td><QuotationActionIcons quotationNumber={quotation.quotation_number} onView={() => setSelectedQuotation(quotation)} onEdit={() => openEditQuotation(quotation)} onDelete={() => { setDeleteTarget(quotation); setSelectedQuotation(null); setError(""); }} /></td></tr>)}</tbody></table></div>}</section>
-    {selectedQuotation && <QuotationDetailsDialog quotation={selectedQuotation} onClose={() => setSelectedQuotation(null)} />}
+    <section className="admin-panel" aria-labelledby="quotation-list-heading"><div className="admin-panel-heading"><div><p className="admin-kicker">Quotation records</p><h2 id="quotation-list-heading">Quotation list</h2></div><span className="admin-count"><FileText size={15} /> {filteredQuotations.length}{normalizedSearch ? ` of ${quotations.length}` : ""} {filteredQuotations.length === 1 ? "quotation" : "quotations"}</span></div><div className="admin-list-toolbar"><label className="admin-search-label" htmlFor="quotation-search">Search quotations</label><div className="admin-search-control"><Search size={17} aria-hidden="true" /><input id="quotation-search" className="admin-search-input" type="search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Quotation number or customer" />{searchTerm && <button className="admin-search-clear" type="button" aria-label="Clear quotation search" onClick={() => setSearchTerm("")}><X size={15} /></button>}</div><span className="admin-search-help">Search by quotation number, customer name or email.</span></div>{loading ? <div className="admin-empty-state" role="status">Loading quotations…</div> : quotations.length === 0 ? <div className="admin-empty-state"><FileText size={28} /><h3>No quotations yet</h3><p>Create the first quotation using your existing customers and services.</p><button className="admin-primary-button" type="button" onClick={openNewQuotation}><Plus size={17} /> New quotation</button></div> : filteredQuotations.length === 0 ? <div className="admin-empty-state"><Search size={28} /><h3>No matching quotations</h3><p>Try another quotation number or customer.</p><button className="admin-secondary-button" type="button" onClick={() => setSearchTerm("")}>Clear search</button></div> : <div className="admin-table-wrap"><table className="admin-table admin-invoice-table"><thead><tr><th scope="col">Quotation</th><th scope="col">Date</th><th scope="col">Customer</th><th scope="col">Total net</th><th scope="col">Actions</th></tr></thead><tbody>{filteredQuotations.map((quotation) => <tr key={quotation.id}><th scope="row">#{quotation.quotation_number}</th><td>{formatDate(quotation.quotation_date)}</td><td><strong>{quotation.customer_name}</strong><span className="admin-table-subtext">{quotation.customer_email}</span></td><td><strong className="admin-invoice-total">{formatMoney(quotation.total_amount)}</strong></td><td><QuotationActionIcons quotationNumber={quotation.quotation_number} onView={() => setSelectedQuotation(quotation)} onEdit={() => openEditQuotation(quotation)} onDownload={() => void downloadQuotationPdf(quotation)} onDelete={() => { setDeleteTarget(quotation); setSelectedQuotation(null); setError(""); }} /></td></tr>)}</tbody></table></div>}</section>
+    {selectedQuotation && <QuotationDetailsDialog quotation={selectedQuotation} onClose={() => setSelectedQuotation(null)} onDownload={() => void downloadQuotationPdf(selectedQuotation)} />}
     {deleteTarget && <AdminDeleteQuotation quotation={deleteTarget} isDeleting={deleteBusy} onCancel={() => setDeleteTarget(null)} onConfirm={confirmDelete} />}
   </>;
 }
